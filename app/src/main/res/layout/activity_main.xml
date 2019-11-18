@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_area"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/customToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="top"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/app_name">
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <EditText
+                android:id="@+id/search_line_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#ffffff"
+                android:drawableLeft="@drawable/ic_search"
+                android:ellipsize="end"
+                android:ems="10"
+                android:hint="Поиск"
+                android:inputType="textPersonName"
+                android:lines="1"
+
+                android:textColorHint="#ffffff" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sad"
+            android:layout_width="match_parent"
+            android:layout_height="570dp"
+            app:layout_anchor="@+id/sad"
+            app:layout_anchorGravity="center"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical">
+                <!-- сюда вставляем любые элементы -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="150dp"
+                        android:layout_height="20dp"
+                        android:text="Название катигории"
+                        android:textColor="#000000"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/firstRecyclerView"
+                        android:layout_width="409dp"
+                        android:layout_height="131dp"
+                        android:background="@color/colorAccent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <me.relex.circleindicator.CircleIndicator2
+                    android:id="@+id/circleIndicator_1_NestedScroll_View"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:ci_drawable="@drawable/circle_indicator_stile" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/secondRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:layout_marginTop="20dp"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="16dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <me.relex.circleindicator.CircleIndicator2
+                    android:id="@+id/circleIndicator_2_NestedScroll_View"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:ci_drawable="@drawable/circle_indicator_stile" />
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" >
+
+        <Button
+            android:id="@+id/homeButton_on_BottomTool_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home">
+        </Button>
+        <Button
+            android:id="@+id/testBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="List">
+        </Button>
+        <Button
+            android:id="@+id/cartBtn_mainActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cart">
+        </Button>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Acc">
+        </Button>
+    </androidx.appcompat.widget.Toolbar>
+</RelativeLayout>
