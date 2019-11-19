@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#ffb74d</color>
+    <color name="colorPrimaryDark">#c88719</color>
+    <color name="colorAccent">#ffe97d</color>
     <color name="colorForCircleIndicator">#FF9800</color>
+    <color name="BlackColorforText">#000000</color>
+    <color name="backgroundArea_Color">#2AF0F0F0</color>
 </resources>

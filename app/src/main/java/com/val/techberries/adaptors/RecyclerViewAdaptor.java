@@ -22,15 +22,17 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
     private OnRecyclerViewItemClick  listener;
     private Context context;
     private List<ItemForRecyclerView> data;
-    public RecyclerViewAdaptor(List<ItemForRecyclerView>items,Context context) {
+    private int layoutForRecyclerViewItem;
+    public RecyclerViewAdaptor(List<ItemForRecyclerView>items,Context context,int layoutForRecyclerViewItem) {
         data=items;
         this.context=context;
+        this.layoutForRecyclerViewItem=layoutForRecyclerViewItem;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.first_recycler_view_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(layoutForRecyclerViewItem,parent,false);
         return new ViewHolder(view);
     }
 

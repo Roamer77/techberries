@@ -7,6 +7,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.val.techberries.R;
+import com.val.techberries.Utils.NoScrollListView;
 import com.val.techberries.adaptors.CustomExpandableListAdaptor;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class CatalogActivity extends AppCompatActivity {
 
-    private ExpandableListView expandableListView;
+    private NoScrollListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +34,19 @@ public class CatalogActivity extends AppCompatActivity {
         Collections.addAll(childList3,"a1","b2","c3");
 
         HashMap<String,List<String>> catalog = new HashMap<>();
-        catalog.put("Раздел 1",childList);
-        catalog.put("Раздел 2",childList2);
-        catalog.put("Раздел 3",childList3);
+        catalog.put("Мужчинам",childList);
+        catalog.put("Женщинам",childList2);
+        catalog.put("Детям",childList3);
+        catalog.put("Спорт",childList);
 
         ArrayList<String> groupTitles=new ArrayList<>();
-        Collections.addAll(groupTitles,"Раздел 1","Раздел 2","Раздел 3");
+        Collections.addAll(groupTitles,"Мужчинам","Женщинам","Детям","Спорт");
 
-        expandableListView =(ExpandableListView) findViewById(R.id.Catalog_elv);
-        expandableListAdapter=new CustomExpandableListAdaptor(this,groupTitles,catalog);
+        ArrayList<Integer> imagesForGroupItems=new ArrayList<>();
+        Collections.addAll(imagesForGroupItems,R.drawable.ic_man,R.drawable.ic_wonem,R.drawable.ic_child,R.drawable.ic_sport);
+
+        expandableListView =(NoScrollListView) findViewById(R.id.Catalog_elv);
+        expandableListAdapter=new CustomExpandableListAdaptor(this,groupTitles,catalog,imagesForGroupItems);
         expandableListView.setAdapter(expandableListAdapter);
 
 

@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.val.techberries.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,11 +20,13 @@ public class CustomExpandableListAdaptor extends BaseExpandableListAdapter {
     private Context context;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
+    private ArrayList<Integer> imagesForGroupItems;
 
-    public CustomExpandableListAdaptor(Context context, List<String> expandableListTitle, HashMap<String, List<String>> expandableListDetail) {
+    public CustomExpandableListAdaptor(Context context, List<String> expandableListTitle, HashMap<String, List<String>> expandableListDetail, ArrayList<Integer> imagesForGroupItems) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
+        this.imagesForGroupItems = imagesForGroupItems;
     }
 
     @Override
@@ -71,6 +75,8 @@ public class CustomExpandableListAdaptor extends BaseExpandableListAdapter {
         TextView textViewFromListTitle =(TextView) convertView.findViewById(R.id.groupTitle_tv);
         textViewFromListTitle.setTypeface(null, Typeface.BOLD);
         textViewFromListTitle.setText(listTitle);
+        ImageView imageView=(ImageView) convertView.findViewById(R.id.groupImg);
+        imageView.setImageResource(imagesForGroupItems.get(groupPosition));
         return convertView;
     }
 

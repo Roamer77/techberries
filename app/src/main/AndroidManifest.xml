@@ -11,10 +11,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.CatalogActivity"></activity>
         <activity android:name=".activities.CartActivity" />
-        <activity
-            android:name=".activities.ScrollingActivity"
-            android:label="Title"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ProductActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

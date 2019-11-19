@@ -26,7 +26,8 @@
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/app_name">
+                app:title="@string/app_name"
+                app:titleTextColor="@color/BlackColorforText">
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -87,6 +88,7 @@
                         tools:layout_editor_absoluteX="0dp"
                         tools:layout_editor_absoluteY="0dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
 
 

@@ -4,11 +4,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundArea_Color"
     tools:context=".activities.CatalogActivity">
 
-    <ExpandableListView
-        android:id="@+id/Catalog_elv"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main_area_catalogActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="671dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:fitsSystemWindows="true"
+            android:focusableInTouchMode="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <EditText
+                android:id="@+id/search_line_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/BlackColorforText"
+                android:drawableLeft="@drawable/ic_search"
+                android:ellipsize="end"
+                android:ems="10"
+                android:hint="Поиск"
+                android:inputType="textPersonName"
+                android:lines="1"
+                android:textColorHint="@color/BlackColorforText"
+                app:layout_scrollFlags="scroll|enterAlways"
+                 />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <com.val.techberries.Utils.NoScrollListView
+                    android:id="@+id/Catalog_elv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:groupIndicator="@null" />
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/homeButton_on_BottomTool_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home" />
+
+        <Button
+            android:id="@+id/testBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="List" />
+
+        <Button
+            android:id="@+id/cartBtn_mainActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cart" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Acc" />
+    </androidx.appcompat.widget.Toolbar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
