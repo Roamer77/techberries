@@ -3,32 +3,26 @@ package com.val.techberries;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.val.techberries.Entities.ItemForRecyclerView;
 import com.val.techberries.activities.CartActivity;
 import com.val.techberries.activities.CatalogActivity;
 import com.val.techberries.activities.ProductActivity;
+import com.val.techberries.activities.ProfileActivity;
 import com.val.techberries.adaptors.RecyclerViewAdaptor;
 import com.val.techberries.interfacies.OnRecyclerViewItemClick;
 
@@ -36,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import me.relex.circleindicator.CircleIndicator;
 import me.relex.circleindicator.CircleIndicator2;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView secondRecyclerView;
     private RecyclerView thirdRecyclerView;
 
-    private Button homeImageButton;
-    private Button listImageButton;
-    private Button openCartButton;
+    private Button homeOpenButton;
+    private Button listOpenButton;
+    private Button cartOpenButton;
+    private Button profileOpenButton;
     private CircleIndicator2 circleIndicator;
     private CircleIndicator2 circleIndicator2;
 
@@ -83,9 +77,10 @@ public class MainActivity extends AppCompatActivity {
                 new ItemForRecyclerView("Кеды 4", R.drawable.ked4));
 
 
-        homeImageButton = findViewById(R.id.homeButton_on_BottomTool_bar);
-        listImageButton = findViewById(R.id.testBtn);
-        openCartButton = findViewById(R.id.cartBtn_mainActivity);
+        homeOpenButton = findViewById(R.id.homeButton_on_BottomTool_bar);
+        listOpenButton = findViewById(R.id.listBtn_mainActivity);
+        cartOpenButton = findViewById(R.id.cartBtn_mainActivity);
+        profileOpenButton=findViewById(R.id.accountBtn_mainActivity);
 
         //первый ресайклер. Для одиночных товаров
         firstRecyclerView = findViewById(R.id.firstRecyclerView);
@@ -142,29 +137,41 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        listImageButton.setOnClickListener(new View.OnClickListener() {
+        listOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, CatalogActivity.class);
                 startActivity(intent);
             }
         });
 
-        openCartButton.setOnClickListener(new View.OnClickListener() {
+        cartOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, CartActivity.class);
                 startActivity(intent);
             }
         });
 
-        homeImageButton.setOnClickListener(new View.OnClickListener() {
+        homeOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
+
+        profileOpenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         recyclerViewAdaptor.setItemClickListener(new OnRecyclerViewItemClick() {
             @Override
             public void onClick(ItemForRecyclerView item) {

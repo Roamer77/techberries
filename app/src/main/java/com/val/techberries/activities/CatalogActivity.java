@@ -2,10 +2,14 @@ package com.val.techberries.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
+import com.val.techberries.MainActivity;
 import com.val.techberries.R;
 import com.val.techberries.Utils.NoScrollListView;
 import com.val.techberries.adaptors.CustomExpandableListAdaptor;
@@ -19,6 +23,11 @@ public class CatalogActivity extends AppCompatActivity {
 
     private NoScrollListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
+
+    private Button homeOpenButton;
+    private Button listOpenButton;
+    private Button cartOpenButton;
+    private Button profileOpenButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +58,45 @@ public class CatalogActivity extends AppCompatActivity {
         expandableListAdapter=new CustomExpandableListAdaptor(this,groupTitles,catalog,imagesForGroupItems);
         expandableListView.setAdapter(expandableListAdapter);
 
+        homeOpenButton = findViewById(R.id.homeButton_cartActivity);
+        listOpenButton = findViewById(R.id.listBtn_cartActivity);
+        cartOpenButton = findViewById(R.id.cartBtn_cartActivity);
+        profileOpenButton=findViewById(R.id.accountBtn_cartActivity);
+
+        listOpenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(CatalogActivity.this, CatalogActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        cartOpenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(CatalogActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        homeOpenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(CatalogActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        profileOpenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               /* Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);*/
+            }
+        });
 
     }
 }

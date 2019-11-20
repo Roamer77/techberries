@@ -74,27 +74,32 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <Button
-            android:id="@+id/homeButton_on_BottomTool_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home" />
+            android:id="@+id/homeButton_cartActivity"
+            android:layout_marginStart="40dp"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/home_button_style"/>
 
         <Button
-            android:id="@+id/testBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="List" />
+            android:id="@+id/listBtn_cartActivity"
+            android:layout_marginLeft="40dp"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/list_button_style"/>
 
         <Button
-            android:id="@+id/cartBtn_mainActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cart" />
+            android:id="@+id/cartBtn_cartActivity"
+            android:layout_marginLeft="40dp"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/cart_button_style"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Acc" />
+            android:id="@+id/accountBtn_cartActivity"
+            android:layout_marginLeft="40dp"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/profile_button_style"/>
     </androidx.appcompat.widget.Toolbar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

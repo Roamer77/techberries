@@ -24,7 +24,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     //для круглых индикаторов для каритнок
-    implementation  'me.relex:circleindicator:2.1.4'
+    implementation 'me.relex:circleindicator:2.1.4'
 
     //круглые изображения
     implementation 'de.hdodenhof:circleimageview:3.0.1'
