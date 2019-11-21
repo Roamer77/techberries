@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.val.techberries.Entities.ItemForRecyclerView;
+import com.val.techberries.Entities.Item;
 import com.val.techberries.R;
 import com.val.techberries.interfacies.OnRecyclerViewItemClick;
 
@@ -21,9 +21,9 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
 
     private OnRecyclerViewItemClick  listener;
     private Context context;
-    private List<ItemForRecyclerView> data;
+    private List<Item> data;
     private int layoutForRecyclerViewItem;
-    public RecyclerViewAdaptor(List<ItemForRecyclerView>items,Context context,int layoutForRecyclerViewItem) {
+    public RecyclerViewAdaptor(List<Item>items, Context context, int layoutForRecyclerViewItem) {
         data=items;
         this.context=context;
         this.layoutForRecyclerViewItem=layoutForRecyclerViewItem;
@@ -56,7 +56,7 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
         return resId;
     }
 
-    private ItemForRecyclerView getItemAtPosition(int position){
+    private Item getItemAtPosition(int position){
         return data.get(position);
     }
     public  class  ViewHolder extends RecyclerView.ViewHolder {

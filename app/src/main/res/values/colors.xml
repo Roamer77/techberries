@@ -5,5 +5,6 @@
     <color name="colorAccent">#ffe97d</color>
     <color name="colorForCircleIndicator">#FF9800</color>
     <color name="BlackColorforText">#000000</color>
-    <color name="backgroundArea_Color">#2AF0F0F0</color>
+    <color name="backgroundArea_Color">#0A706565</color>
+    <color name="wigthBackground">#ffffff</color>
 </resources>

@@ -13,12 +13,19 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.val.techberries.R;
 
+import java.util.ArrayList;
+
 public class ViewPagerForProductActivity extends PagerAdapter {
     private Context context;
 
-    public ViewPagerForProductActivity(Context context) {
+
+    private ArrayList<Integer> imagesForViewPager;
+
+    public ViewPagerForProductActivity(Context context, ArrayList<Integer> imagesForViewPager) {
         this.context = context;
+        this.imagesForViewPager = imagesForViewPager;
     }
+
 
     @NonNull
     @Override
@@ -47,15 +54,10 @@ public class ViewPagerForProductActivity extends PagerAdapter {
 
     //вернёт id  картинки для отображения
     private int getImageAt(int position) {
-        switch (position) {
-            case 0:
-                return R.drawable.product_img0;
-            case 1:
-                return R.drawable.product_img1;
-            case 2:
-                return R.drawable.product_img2;
-            default:
-                return R.drawable.product_img0;
-        }
+        return imagesForViewPager.get(position);
+    }
+
+    public void setImagesForViewPager(ArrayList<Integer> imagesForViewPager) {
+        this.imagesForViewPager = imagesForViewPager;
     }
 }

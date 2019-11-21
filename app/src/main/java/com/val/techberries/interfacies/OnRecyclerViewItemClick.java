@@ -1,7 +1,7 @@
 package com.val.techberries.interfacies;
 
-import com.val.techberries.Entities.ItemForRecyclerView;
+import com.val.techberries.Entities.Item;
 
 public interface OnRecyclerViewItemClick {
-    void onClick(ItemForRecyclerView item);
+    void onClick(Item item);
 }

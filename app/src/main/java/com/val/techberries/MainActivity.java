@@ -18,10 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.val.techberries.Entities.ItemForRecyclerView;
+import com.val.techberries.Entities.Item;
 import com.val.techberries.activities.CartActivity;
 import com.val.techberries.activities.CatalogActivity;
 import com.val.techberries.activities.ProductActivity;
+import com.val.techberries.activities.ProductListByCategoryActivity;
 import com.val.techberries.activities.ProfileActivity;
 import com.val.techberries.adaptors.RecyclerViewAdaptor;
 import com.val.techberries.interfacies.OnRecyclerViewItemClick;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView secondRecyclerView;
     private RecyclerView thirdRecyclerView;
 
-    private Button homeOpenButton;
+
     private Button listOpenButton;
     private Button cartOpenButton;
     private Button profileOpenButton;
@@ -56,28 +57,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<ItemForRecyclerView> testData = new ArrayList<>();
-        Collections.addAll(testData, new ItemForRecyclerView("Куртка 1", R.drawable.product_img0),
-                new ItemForRecyclerView("Куртка 2", R.drawable.product_img1),
-                new ItemForRecyclerView("Куртка 3", R.drawable.product_img2),
-                new ItemForRecyclerView("Куртка 1", R.drawable.product_img0),
-                new ItemForRecyclerView("Куртка 2", R.drawable.product_img1),
-                new ItemForRecyclerView("Куртка 3", R.drawable.product_img2));
+        List<Item> testData = new ArrayList<>();
+        Collections.addAll(testData, new Item("Куртка 1", R.drawable.product_img0),
+                new Item("Куртка 2", R.drawable.product_img1),
+                new Item("Куртка 3", R.drawable.product_img2),
+                new Item("Куртка 1", R.drawable.product_img0),
+                new Item("Куртка 2", R.drawable.product_img1),
+                new Item("Куртка 3", R.drawable.product_img2));
 
-        List<ItemForRecyclerView> testData2 = new ArrayList<>();
-        Collections.addAll(testData2, new ItemForRecyclerView("", R.drawable.prod_place1),
-                new ItemForRecyclerView("", R.drawable.prod_place2),
-                new ItemForRecyclerView("", R.drawable.prod_place3));
+        List<Item> testData2 = new ArrayList<>();
+        Collections.addAll(testData2, new Item("", R.drawable.prod_place1),
+                new Item("", R.drawable.prod_place2),
+                new Item("", R.drawable.prod_place3));
 
-        List<ItemForRecyclerView> testData3 = new ArrayList<>();
+        List<Item> testData3 = new ArrayList<>();
         Collections.addAll(testData3,
-                new ItemForRecyclerView("Кеды 1", R.drawable.ked1),
-                new ItemForRecyclerView("Кеды 2", R.drawable.ked2),
-                new ItemForRecyclerView("Кеды 3", R.drawable.ked3),
-                new ItemForRecyclerView("Кеды 4", R.drawable.ked4));
+                new Item("Кеды 1", R.drawable.ked1),
+                new Item("Кеды 2", R.drawable.ked2),
+                new Item("Кеды 3", R.drawable.ked3),
+                new Item("Кеды 4", R.drawable.ked4));
 
 
-        homeOpenButton = findViewById(R.id.homeButton_on_BottomTool_bar);
+
         listOpenButton = findViewById(R.id.listBtn_mainActivity);
         cartOpenButton = findViewById(R.id.cartBtn_mainActivity);
         profileOpenButton=findViewById(R.id.accountBtn_mainActivity);
@@ -131,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
                     //открытие новой активити с уведомлениями
                     Log.d("MyTag", "Нажал на уведомления");
                     Toast.makeText(getApplicationContext(),"Нажал на уведомления",Toast.LENGTH_LONG).show();
+
+                    startActivity( new Intent(MainActivity.this, ProductListByCategoryActivity.class));
                     return true;
                 } else {
                     return false;
@@ -155,14 +158,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        homeOpenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
         profileOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,9 +169,11 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerViewAdaptor.setItemClickListener(new OnRecyclerViewItemClick() {
             @Override
-            public void onClick(ItemForRecyclerView item) {
+            public void onClick(Item item) {
                 Toast.makeText(getApplicationContext(),"Нажал на "+ item.getItemName(),Toast.LENGTH_LONG).show();
+
                 Intent intent=new Intent(MainActivity.this,ProductActivity.class);
+                intent.putExtra("ProductName",item.getItemName());
                 startActivity(intent);
             }
         });

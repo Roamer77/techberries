@@ -38,4 +38,5 @@
         android:text="Воспользуйтесь каталогом , чтобы добавить товар"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cartMsgTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
