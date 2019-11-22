@@ -23,8 +23,6 @@ public class ProfileActivity extends AppCompatActivity {
     private ConstraintLayout countryPicker;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

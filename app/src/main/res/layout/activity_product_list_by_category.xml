@@ -1,18 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ProductListByCategoryActivity">
 
-    <GridView
-        android:id="@+id/prodctListGridView"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/maqwe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"
-        android:horizontalSpacing="20dp"
-        android:verticalSpacing="20dp"
-        android:listSelector="@color/colorPrimary">
-    </GridView>
-</LinearLayout>
+        android:layout_height="661dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:fitsSystemWindows="true"
+            android:focusableInTouchMode="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <EditText
+                android:id="@+id/search_line_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/BlackColorforText"
+                android:drawableLeft="@drawable/ic_search"
+                android:ellipsize="end"
+                android:ems="10"
+                android:hint="Поиск"
+                android:inputType="textPersonName"
+                android:lines="1"
+                android:textColorHint="@color/BlackColorforText"
+                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <Button
+                    android:id="@+id/filterListBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Фильтр"
+                    android:textSize="10dp" />
+
+                <Button
+                    android:id="@+id/filterByPopularity"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="80dp"
+                    android:text="по популярности"
+                    android:textSize="9dp" />
+
+                <Button
+                    android:id="@+id/styleModeBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="52dp" />
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:layout_marginTop="10dp"
+            app:layout_anchorGravity="center"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.val.techberries.Utils.NoScrollGridView
+                    android:id="@+id/prodctListGridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="480dp"
+                    android:horizontalSpacing="20dp"
+                    android:listSelector="@color/colorPrimary"
+                    android:numColumns="2"
+                    android:verticalSpacing="20dp"/>
+
+            </LinearLayout>
+
+
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/homeButton_cartActivity"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="40dp"
+            android:background="@drawable/home_button_style" />
+
+        <Button
+            android:id="@+id/listBtn_cartActivity"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/list_button_style" />
+
+        <Button
+            android:id="@+id/cartBtn_cartActivity"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/cart_button_style" />
+
+        <Button
+            android:id="@+id/accountBtn_cartActivity"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/profile_button_style" />
+    </androidx.appcompat.widget.Toolbar>
+
+
+</RelativeLayout>

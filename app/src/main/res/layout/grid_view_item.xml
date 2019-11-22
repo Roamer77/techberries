@@ -14,7 +14,7 @@
             <ImageView
                 android:id="@+id/prodctListGridView_img"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:src="@drawable/ic_flag"/>
 
             <TextView
@@ -23,8 +23,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/prodctListGridView_img"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="2dp"
                 android:paddingLeft="14dp"
                 android:text="Cost" />
 
@@ -33,20 +33,20 @@
                 android:layout_width="49dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/prodctListGridView_img"
-                android:background="@drawable/ic_add_shopping_cart"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="67dp" />
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/ic_add_shopping_cart" />
 
             <Button
                 android:id="@+id/prodctListGridView_likeBtn"
                 android:layout_width="49dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/prodctListGridView_img"
-                android:background="@drawable/ic_favorite24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="131dp" />
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_toStartOf="@+id/prodctListGridView_addToCartBtn"
+                android:background="@drawable/ic_favorite24dp" />
 
             <TextView
                 android:id="@+id/prodctListGridView_description"
@@ -54,8 +54,8 @@
                 android:layout_height="49dp"
                 android:layout_below="@+id/prodctListGridView_productCost"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
                 android:text="Description" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

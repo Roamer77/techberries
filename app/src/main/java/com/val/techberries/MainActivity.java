@@ -125,57 +125,44 @@ public class MainActivity extends AppCompatActivity {
         circleIndicator.attachToRecyclerView(firstRecyclerView, pagerSnapHelper);
         circleIndicator2.attachToRecyclerView(secondRecyclerView,pagerSnapHelper);
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.notification) {
-                    //открытие новой активити с уведомлениями
-                    Log.d("MyTag", "Нажал на уведомления");
-                    Toast.makeText(getApplicationContext(),"Нажал на уведомления",Toast.LENGTH_LONG).show();
+        toolbar.setOnMenuItemClickListener(item -> {
 
-                    startActivity( new Intent(MainActivity.this, ProductListByCategoryActivity.class));
-                    return true;
-                } else {
-                    return false;
-                }
+            if (item.getItemId() == R.id.notification) {
+                //открытие новой активити с уведомлениями
+                Log.d("MyTag", "Нажал на уведомления");
+                Toast.makeText(getApplicationContext(),"Нажал на уведомления",Toast.LENGTH_LONG).show();
+
+                startActivity( new Intent(MainActivity.this, ProductListByCategoryActivity.class));
+                return true;
+            } else {
+                return false;
             }
         });
-        listOpenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        listOpenButton.setOnClickListener(v -> {
 
-                Intent intent = new Intent(MainActivity.this, CatalogActivity.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(MainActivity.this, CatalogActivity.class);
+            startActivity(intent);
         });
 
-        cartOpenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        cartOpenButton.setOnClickListener(v -> {
 
-                Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(MainActivity.this, CartActivity.class);
+            startActivity(intent);
         });
 
 
-        profileOpenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
+        profileOpenButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
         });
 
-        recyclerViewAdaptor.setItemClickListener(new OnRecyclerViewItemClick() {
-            @Override
-            public void onClick(Item item) {
-                Toast.makeText(getApplicationContext(),"Нажал на "+ item.getItemName(),Toast.LENGTH_LONG).show();
+        recyclerViewAdaptor.setItemClickListener(item -> {
 
-                Intent intent=new Intent(MainActivity.this,ProductActivity.class);
-                intent.putExtra("ProductName",item.getItemName());
-                startActivity(intent);
-            }
+            Toast.makeText(getApplicationContext(),"Нажал на "+ item.getItemName(),Toast.LENGTH_LONG).show();
+
+            Intent intent=new Intent(MainActivity.this,ProductActivity.class);
+            intent.putExtra("ProductName",item.getItemName());
+            startActivity(intent);
         });
 
         //на картинки можно кликать поментка на будующее
