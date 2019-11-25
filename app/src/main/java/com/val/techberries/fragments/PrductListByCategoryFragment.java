@@ -1,43 +1,51 @@
-package com.val.techberries.activities;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+package com.val.techberries.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import com.val.techberries.Entities.Item;
 import com.val.techberries.R;
+import com.val.techberries.activities.ProductListByCategoryActivity;
 import com.val.techberries.adaptors.GridViewAdaptor;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-public class ProductListByCategoryActivity extends AppCompatActivity {
-
+public class PrductListByCategoryFragment extends Fragment {
     private GridView gridView;
     private Button gridViewStyleBtn;
     private Button filterListBtn;
     private Button filterByPopularityBtn;
     private Integer styleModeID=1;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_list_by_category);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.activity_product_list_by_category,null);
+        return view;
+    }
 
-        gridView=findViewById(R.id.prodctListGridView);
-        gridViewStyleBtn=findViewById(R.id.styleModeBtn);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        filterByPopularityBtn=findViewById(R.id.filterByPopularity);
-        filterListBtn=findViewById(R.id.filterListBtn);
+        gridView=view. findViewById(R.id.prodctListGridView);
+        gridViewStyleBtn=view. findViewById(R.id.styleModeBtn);
+
+        filterByPopularityBtn=view.findViewById(R.id.filterByPopularity);
+        filterListBtn=view. findViewById(R.id.filterListBtn);
 
         ArrayList<Item> data = new ArrayList<>();
         Collections.addAll(data,
@@ -57,18 +65,18 @@ public class ProductListByCategoryActivity extends AppCompatActivity {
                 new Item("Кеды 3", R.drawable.ked3),
                 new Item("Кеды 4", R.drawable.ked4));
 
-        GridViewAdaptor gridViewAdaptor =new GridViewAdaptor(this,data);
+        GridViewAdaptor gridViewAdaptor =new GridViewAdaptor(getActivity(),data);
         gridView.setAdapter(gridViewAdaptor);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),"Нажал на "+position,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Нажал на "+position,Toast.LENGTH_LONG).show();
 
             }
         });
 
-       gridViewStyleBtn.setOnClickListener(new View.OnClickListener() {
+        gridViewStyleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gridView.setNumColumns(styleModeID);
@@ -81,14 +89,13 @@ public class ProductListByCategoryActivity extends AppCompatActivity {
         });
 
 
-       filterByPopularityBtn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               AlertDialog.Builder alertDialog=new AlertDialog.Builder(ProductListByCategoryActivity.this);
-               initTipDialog(alertDialog);
-           }
-       });
-
+        filterByPopularityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog=new AlertDialog.Builder(getActivity());
+                initTipDialog(alertDialog);
+            }
+        });
     }
     private void initTipDialog(AlertDialog.Builder alert) {
         View customLayout=getLayoutInflater().inflate(R.layout.filter_list_for_filter_dialog,null);
@@ -96,19 +103,15 @@ public class ProductListByCategoryActivity extends AppCompatActivity {
         ArrayList<String> filters=new ArrayList<>();
         Collections.addAll(filters,"По цене","По производителю","По размеру");
         ListView listView=customLayout.findViewById(R.id.filter_list_for_filter_dialog);
-        listView.setAdapter(new ArrayAdapter<String>(ProductListByCategoryActivity.this,android.R.layout.simple_expandable_list_item_1,filters));
+        listView.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1,filters));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),"Нажал на "+position,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Нажал на "+position,Toast.LENGTH_LONG).show();
             }
         });
         alert.setView(customLayout);
         AlertDialog dialog =alert.create();
         dialog.show();
-    }
-
-    private void fillTheFilterList(){
-
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.val.techberries.MainActivity;
 import com.val.techberries.R;
@@ -62,6 +63,19 @@ public class CatalogActivity extends AppCompatActivity {
         listOpenButton = findViewById(R.id.listBtn_cartActivity);
         cartOpenButton = findViewById(R.id.cartBtn_cartActivity);
         profileOpenButton=findViewById(R.id.accountBtn_cartActivity);
+
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                Toast.makeText(getApplicationContext(),"Нажал на "+childPosition,Toast.LENGTH_LONG).show();
+                //в будующем в зависимости от катигории будут отображаться разные картинки
+                Intent intent=new Intent(CatalogActivity.this,ProductListByCategoryActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
 
         listOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override

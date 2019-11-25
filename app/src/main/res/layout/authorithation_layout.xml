@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Авторизация"
+        android:textAlignment="center"
+        android:textSize="35dp"
+        android:textColor="@color/BlackColorforText"/>
+    <EditText
+        android:layout_marginTop="@dimen/app_bar_height"
+        android:id="@+id/phone_edittext_auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Введите номер телефона "
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/password_edittext_auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Введите пароль"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/reg_btn_registration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Вход" />
+</LinearLayout>

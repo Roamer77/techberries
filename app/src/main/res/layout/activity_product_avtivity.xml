@@ -64,6 +64,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Тут будет инфа о товаре"
+                        android:textSize="20dp"/>
+                </LinearLayout>
                 <!-- сюда вставляем любые элементы -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -115,6 +125,7 @@
            android:layout_height="50dp"
            android:src="@drawable/ic_add_shopping_cart"></ImageButton>
    </LinearLayout>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar9"
         android:layout_width="match_parent"

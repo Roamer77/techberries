@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MyTag", "Нажал на уведомления");
                 Toast.makeText(getApplicationContext(),"Нажал на уведомления",Toast.LENGTH_LONG).show();
 
-                startActivity( new Intent(MainActivity.this, ProductListByCategoryActivity.class));
                 return true;
             } else {
                 return false;
