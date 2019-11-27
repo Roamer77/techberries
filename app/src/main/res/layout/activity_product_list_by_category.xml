@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.val.techberries.Utils.NoScrollGridView
+                <com.val.techberries.utils.NoScrollGridView
                     android:id="@+id/prodctListGridView"
                     android:layout_width="match_parent"
                     android:layout_height="480dp"

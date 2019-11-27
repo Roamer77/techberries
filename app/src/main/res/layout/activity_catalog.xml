@@ -47,7 +47,7 @@
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <com.val.techberries.Utils.NoScrollListView
+                <com.val.techberries.utils.NoScrollListView
                     android:id="@+id/Catalog_elv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

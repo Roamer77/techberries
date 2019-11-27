@@ -9,26 +9,42 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.val.techberries.Entities.Item;
+import com.val.techberries.entities.Item;
 import com.val.techberries.R;
 import com.val.techberries.interfacies.OnRecyclerViewItemClick;
 
 import java.util.List;
 
-public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdaptor.ViewHolder>{
+public class RecyclerViewAdaptor extends ListAdapter<Item,RecyclerViewAdaptor.ViewHolder> {
 
     private OnRecyclerViewItemClick  listener;
     private Context context;
-    private List<Item> data;
+
     private int layoutForRecyclerViewItem;
-    public RecyclerViewAdaptor(List<Item>items, Context context, int layoutForRecyclerViewItem) {
-        data=items;
-        this.context=context;
+
+    public  RecyclerViewAdaptor (int layoutForRecyclerViewItem,Context context){
+        super(DIFFS_CALLBACK);
         this.layoutForRecyclerViewItem=layoutForRecyclerViewItem;
+        this.context=context;
     }
 
+
+     private static final  DiffUtil.ItemCallback<Item>DIFFS_CALLBACK =new DiffUtil.ItemCallback<Item>() {
+         @Override
+         public boolean areItemsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
+             return oldItem.getId()==newItem.getId();
+         }
+
+         @Override
+         public boolean areContentsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
+             return oldItem.getCost()==newItem.getCost() && oldItem.getDescription().equals(newItem.getDescription())
+                     && oldItem.getItemImage()==newItem.getItemImage();
+         }
+     };
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,26 +54,14 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int imageId=data.get(position).getItemImage();
-        holder.textView.setText(data.get(position).getItemName());
+        int imageId=getItem(position).getItemImage();
+        holder.textView.setText(getItem(position).getItemName());
         holder.itemImage.setImageDrawable(context.getResources().getDrawable(imageId));
     }
 
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
-
-
-    private   int getImageIdByName(String name){
-        String  pkgName=context.getPackageName();
-        int resId=context.getResources().getIdentifier(name,"mipmap",pkgName);
-        Log.i("CustomListView", "Res Name: "+ name+"==> Res ID = "+ resId);
-        return resId;
-    }
 
     private Item getItemAtPosition(int position){
-        return data.get(position);
+        return getItem(position);
     }
     public  class  ViewHolder extends RecyclerView.ViewHolder {
         private ImageView itemImage;
@@ -78,6 +82,7 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
             });
         }
     }
+
 
     public void setItemClickListener(OnRecyclerViewItemClick listener) {
         this.listener = listener;

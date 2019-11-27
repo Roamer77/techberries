@@ -16,10 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.val.techberries.Entities.Item;
+import com.val.techberries.entities.Item;
 import com.val.techberries.R;
-import com.val.techberries.activities.ProductListByCategoryActivity;
 import com.val.techberries.adaptors.GridViewAdaptor;
+import com.val.techberries.modelViews.ViewModelForProductListByCategory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,23 +47,10 @@ public class PrductListByCategoryFragment extends Fragment {
         filterByPopularityBtn=view.findViewById(R.id.filterByPopularity);
         filterListBtn=view. findViewById(R.id.filterListBtn);
 
-        ArrayList<Item> data = new ArrayList<>();
-        Collections.addAll(data,
-                new Item("Кеды 1", R.drawable.ked1),
-                new Item("Кеды 2", R.drawable.ked2),
-                new Item("Кеды 3", R.drawable.ked3),
-                new Item("Кеды 4", R.drawable.ked4),new Item("Кеды 1", R.drawable.ked1),
-                new Item("Кеды 2", R.drawable.ked2),
-                new Item("Кеды 3", R.drawable.ked3),
-                new Item("Кеды 4", R.drawable.ked4),
-                new Item("Кеды 1", R.drawable.ked1),
-                new Item("Кеды 2", R.drawable.ked2),
-                new Item("Кеды 3", R.drawable.ked3),
-                new Item("Кеды 4", R.drawable.ked4),
-                new Item("Кеды 1", R.drawable.ked1),
-                new Item("Кеды 2", R.drawable.ked2),
-                new Item("Кеды 3", R.drawable.ked3),
-                new Item("Кеды 4", R.drawable.ked4));
+        //на  лайв дата
+        ViewModelForProductListByCategory viewModelForProductListByCategory=new ViewModelForProductListByCategory();
+        ArrayList<Item> data=viewModelForProductListByCategory.getDataForProductListByCategory();
+
 
         GridViewAdaptor gridViewAdaptor =new GridViewAdaptor(getActivity(),data);
         gridView.setAdapter(gridViewAdaptor);

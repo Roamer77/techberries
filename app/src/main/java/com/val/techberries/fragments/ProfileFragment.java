@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.val.techberries.R;
-import com.val.techberries.Utils.NoScrollArrayList;
+import com.val.techberries.utils.NoScrollArrayList;
 
 import java.util.ArrayList;
 import java.util.Collections;

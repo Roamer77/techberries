@@ -1,14 +1,25 @@
-package com.val.techberries.Entities;
+package com.val.techberries.entities;
 
 public class Item {
     private String itemName;
     private int itemImage;
-
+    private int id;
     private int cost;
     private  String description;
+
+
     public Item(String itemName, int itemImage) {
         this.itemName = itemName;
         this.itemImage = itemImage;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getItemName() {

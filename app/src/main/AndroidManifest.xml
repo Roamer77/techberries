@@ -17,14 +17,6 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".activities.ProductListByCategoryActivity" />
-        <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.CatalogActivity" />
-        <activity android:name=".activities.CartActivity" />
-        <activity android:name=".activities.ProductActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.val.techberries.Entities.Item;
+import com.val.techberries.entities.Item;
 import com.val.techberries.R;
 
 import java.util.ArrayList;

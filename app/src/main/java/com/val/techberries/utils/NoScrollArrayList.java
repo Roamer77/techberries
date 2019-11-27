@@ -1,4 +1,4 @@
-package com.val.techberries.Utils;
+package com.val.techberries.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

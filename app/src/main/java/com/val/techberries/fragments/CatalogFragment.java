@@ -1,6 +1,5 @@
 package com.val.techberries.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.val.techberries.R;
-import com.val.techberries.Utils.NoScrollListView;
-import com.val.techberries.activities.CatalogActivity;
-import com.val.techberries.activities.ProductListByCategoryActivity;
+import com.val.techberries.utils.NoScrollListView;
 import com.val.techberries.adaptors.CustomExpandableListAdaptor;
 
 import java.util.ArrayList;

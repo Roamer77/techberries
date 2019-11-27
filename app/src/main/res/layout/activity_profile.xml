@@ -148,7 +148,7 @@
                     android:text="Справочная информация"
                     android:textColor="@color/colorPrimaryDark" />
 
-                <com.val.techberries.Utils.NoScrollArrayList
+                <com.val.techberries.utils.NoScrollArrayList
                     android:id="@+id/listOfInformation"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
