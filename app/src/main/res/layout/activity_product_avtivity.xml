@@ -69,9 +69,22 @@
                     android:layout_height="150dp"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/ProductName"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="Тут будет инфа о товаре"
+                        android:text="Название: "
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:id="@+id/ProductCost"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Цена: "
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:id="@+id/ProductDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Описание: "
                         android:textSize="20dp"/>
                 </LinearLayout>
                 <!-- сюда вставляем любые элементы -->
@@ -115,6 +128,7 @@
        android:orientation="horizontal">
 
        <Button
+           android:id="@+id/addToCart_Btn"
            android:layout_width="335dp"
            android:layout_height="match_parent"
            android:text="В корзину">
@@ -123,7 +137,7 @@
        <ImageButton
            android:layout_width="50dp"
            android:layout_height="50dp"
-           android:src="@drawable/ic_add_shopping_cart"></ImageButton>
+           android:src="@drawable/ic_add_shopping_cart"/>
    </LinearLayout>
 
     <androidx.appcompat.widget.Toolbar

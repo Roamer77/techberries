@@ -63,6 +63,7 @@ public class RecyclerViewAdaptor extends ListAdapter<Item,RecyclerViewAdaptor.Vi
     private Item getItemAtPosition(int position){
         return getItem(position);
     }
+
     public  class  ViewHolder extends RecyclerView.ViewHolder {
         private ImageView itemImage;
         private  TextView textView;

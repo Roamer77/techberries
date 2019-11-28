@@ -9,20 +9,20 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.val.techberries.entities.Item;
-import com.val.techberries.utils.dataBase.DAO.ItemDao;
+import com.val.techberries.entities.ItemToUserCart;
+import com.val.techberries.utils.dataBase.DAO.ItemToUserCartDao;
 
 
-@Database(entities = {Item.class},version = 1)
+@Database(entities = {ItemToUserCart.class},version = 1)
 public abstract class MyDataBase extends RoomDatabase {
     private  static MyDataBase instance;
 
-    public  abstract ItemDao itemDao();
+    public  abstract ItemToUserCartDao itemDao();
 
     public  static synchronized MyDataBase getInstance(Context context){
         if(instance==null){
             instance= Room.databaseBuilder(context.getApplicationContext()
-                    , MyDataBase.class,"MyDataBase")
+                    , MyDataBase.class,"MyDataBase1")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();
@@ -39,7 +39,7 @@ public abstract class MyDataBase extends RoomDatabase {
     };
     //заполним данными нашу таблицу
     private  static class  fillNoteTableWithData extends AsyncTask<Void,Void,Void>{
-        private ItemDao itemDao;
+        private ItemToUserCartDao itemDao;
 
         public fillNoteTableWithData(MyDataBase dataBase) {
             this.itemDao = dataBase.itemDao();

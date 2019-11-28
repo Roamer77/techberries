@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
         circleIndicator2 = view.findViewById(R.id.circleIndicator_2_NestedScroll_View);
 
 
-        RecyclerViewAdaptor recyclerViewAdaptor2 = new RecyclerViewAdaptor(R.layout.first_recycler_view_item,getActivity());
+        RecyclerViewAdaptor recyclerViewAdaptor2 = new RecyclerViewAdaptor(R.layout.advertising_layout_for_second_rv,getActivity());
         secondRecyclerView.setAdapter(recyclerViewAdaptor2);
         secondRecyclerView.setHasFixedSize(true);
 
@@ -134,6 +134,8 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getActivity(), "Нажал на " + item.getItemName(), Toast.LENGTH_LONG).show();
             Bundle data = new Bundle();
             data.putString("ProductName", item.getItemName());
+            data.putString("ProductCost",String.valueOf(item.getCost()));
+            data.putString("ProductDescription",item.getDescription());
             Navigation.findNavController(view).navigate(R.id.productFragment, data);
         });
 

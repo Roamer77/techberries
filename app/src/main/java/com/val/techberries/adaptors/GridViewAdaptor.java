@@ -49,7 +49,7 @@ public class GridViewAdaptor extends BaseAdapter {
         }else {
             view=(View) convertView;
         }
-        ImageView productImage=view.findViewById(R.id.prodctListGridView_img);
+        ImageView productImage=view.findViewById(R.id.itemImage);
         TextView description=view.findViewById(R.id.prodctListGridView_description);
         TextView cost=view.findViewById(R.id.prodctListGridView_productCost);
 

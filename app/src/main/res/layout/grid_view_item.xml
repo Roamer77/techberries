@@ -12,7 +12,7 @@
             android:orientation="vertical"
             android:background="@color/colorPrimary">
             <ImageView
-                android:id="@+id/prodctListGridView_img"
+                android:id="@+id/itemImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:src="@drawable/ic_flag"/>
@@ -21,7 +21,7 @@
                 android:id="@+id/prodctListGridView_productCost"
                 android:layout_width="103dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/prodctListGridView_img"
+                android:layout_below="@+id/itemImage"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="7dp"
                 android:layout_marginTop="2dp"
@@ -32,7 +32,7 @@
                 android:id="@+id/prodctListGridView_addToCartBtn"
                 android:layout_width="49dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/prodctListGridView_img"
+                android:layout_below="@+id/itemImage"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd="7dp"
@@ -42,7 +42,7 @@
                 android:id="@+id/prodctListGridView_likeBtn"
                 android:layout_width="49dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/prodctListGridView_img"
+                android:layout_below="@+id/itemImage"
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd="3dp"
                 android:layout_toStartOf="@+id/prodctListGridView_addToCartBtn"
