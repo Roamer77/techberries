@@ -11,10 +11,10 @@ public class ItemToUserCart  {
 
     int cost;
     String itemName;
-    int itemImage;
+    byte[] itemImage;
     String description;
 
-    public ItemToUserCart(int cost, String itemName, int itemImage, String description) {
+    public ItemToUserCart(int cost, String itemName, byte[] itemImage, String description) {
         this.cost = cost;
         this.itemName = itemName;
         this.itemImage = itemImage;
@@ -45,11 +45,11 @@ public class ItemToUserCart  {
         this.itemName = itemName;
     }
 
-    public int getItemImage() {
+    public byte[] getItemImage() {
         return itemImage;
     }
 
-    public void setItemImage(int itemImage) {
+    public void setItemImage(byte[] itemImage) {
         this.itemImage = itemImage;
     }
 

@@ -17,15 +17,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingLeft="15dp"
         android:hint="Введите номер телефона "
         android:inputType="phone" />
 
     <EditText
-        android:id="@+id/email_edittext_registration"
+        android:id="@+id/login_edittext_registration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Введите email"
+        android:paddingLeft="15dp"
+        android:hint="Введите логин"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -33,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingLeft="15dp"
         android:hint="Введите пароль"
         android:inputType="textPassword" />
 
@@ -42,4 +45,14 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:text="Регистрация" />
+
+    <TextView
+        android:id="@+id/i_have_Account_textView"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/I_have_account"
+        android:textColor="@color/blueColorRef"
+        android:clickable="true" />
 </LinearLayout>

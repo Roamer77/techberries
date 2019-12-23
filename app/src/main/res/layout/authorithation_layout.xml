@@ -17,19 +17,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingLeft="15dp"
         android:hint="Введите номер телефона "
         android:inputType="phone" />
-
+    <EditText
+        android:id="@+id/login_edittext_auth"
+        android:layout_width="match_parent"
+        android:hint="Введите логин"
+        android:paddingLeft="15dp"
+        android:layout_height="wrap_content"/>
     <EditText
         android:id="@+id/password_edittext_auth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingLeft="15dp"
         android:hint="Введите пароль"
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/reg_btn_registration"
+        android:id="@+id/send_btn_auth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"

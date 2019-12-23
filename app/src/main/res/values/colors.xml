@@ -7,4 +7,5 @@
     <color name="BlackColorforText">#000000</color>
     <color name="backgroundArea_Color">#0A706565</color>
     <color name="wigthBackground">#ffffff</color>
+    <color name="blueColorRef">#0027FF</color>
 </resources>

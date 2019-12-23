@@ -15,14 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.val.techberries.entities.Item;
 import com.val.techberries.R;
 import com.val.techberries.adaptors.GridViewAdaptor;
+import com.val.techberries.interfacies.MyCallBackToRepo;
 import com.val.techberries.modelViews.ViewModelForProductListByCategory;
+import com.val.techberries.modelViews.viewModelsForDB.UserCartViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class PrductListByCategoryFragment extends Fragment {
     private GridView gridView;
@@ -30,6 +34,7 @@ public class PrductListByCategoryFragment extends Fragment {
     private Button filterListBtn;
     private Button filterByPopularityBtn;
     private Integer styleModeID=1;
+    private UserCartViewModel userCartViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,12 +52,34 @@ public class PrductListByCategoryFragment extends Fragment {
         filterByPopularityBtn=view.findViewById(R.id.filterByPopularity);
         filterListBtn=view. findViewById(R.id.filterListBtn);
 
-        //на  лайв дата
+        ArrayList<Item> defData=new ArrayList<>();
+        defData.add(new Item());
+        defData.add(new Item());
+
+        GridViewAdaptor gridViewAdaptor =new GridViewAdaptor(getActivity(),defData);
+
+        int categoryId=getArguments().getInt("categoryID");
+
+        userCartViewModel = ViewModelProviders.of(this).get(UserCartViewModel.class);
+        gridViewAdaptor.setUserCartViewModel(userCartViewModel);
+
         ViewModelForProductListByCategory viewModelForProductListByCategory=new ViewModelForProductListByCategory();
-        ArrayList<Item> data=viewModelForProductListByCategory.getDataForProductListByCategory();
+
+        viewModelForProductListByCategory.getDataForProductListByCategory(categoryId,new MyCallBackToRepo<Item>() {
+           @Override
+           public void onOk(List<Item> nameImagesData) {
+               gridViewAdaptor.setGridViewData((ArrayList<Item>) nameImagesData);
+               gridViewAdaptor.notifyDataSetChanged();
+           }
+
+           @Override
+           public void onError(Throwable throwable) {
+
+           }
+       });
 
 
-        GridViewAdaptor gridViewAdaptor =new GridViewAdaptor(getActivity(),data);
+
         gridView.setAdapter(gridViewAdaptor);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

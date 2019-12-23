@@ -73,20 +73,6 @@ public class HomeFragment extends Fragment {
         circleIndicator2 = view.findViewById(R.id.circleIndicator_2_NestedScroll_View);
 
 
-        RecyclerViewAdaptor recyclerViewAdaptor2 = new RecyclerViewAdaptor(R.layout.advertising_layout_for_second_rv,getActivity());
-        secondRecyclerView.setAdapter(recyclerViewAdaptor2);
-        secondRecyclerView.setHasFixedSize(true);
-
-        viewModelForHomePage.getDataFroHomePageAdvertisementRecyclerView().observe(this, new Observer<List<Item>>() {
-            @Override
-            public void onChanged(List<Item> items) {
-                recyclerViewAdaptor2.submitList(items);
-                pagerSnapHelper2.attachToRecyclerView(secondRecyclerView);
-                circleIndicator2.attachToRecyclerView(secondRecyclerView, pagerSnapHelper);
-
-            }
-        });
-
         firstRecyclerView = view.findViewById(R.id.firstRecyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -106,6 +92,22 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        RecyclerViewAdaptor recyclerViewAdaptor2 = new RecyclerViewAdaptor(R.layout.advertising_layout_for_second_rv,getActivity());
+        secondRecyclerView.setAdapter(recyclerViewAdaptor2);
+        secondRecyclerView.setHasFixedSize(true);
+
+        viewModelForHomePage.getDataFroHomePageAdvertisementRecyclerView().observe(this, new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                recyclerViewAdaptor2.submitList(items);
+                pagerSnapHelper2.attachToRecyclerView(secondRecyclerView);
+                circleIndicator2.attachToRecyclerView(secondRecyclerView, pagerSnapHelper);
+
+            }
+        });
+
+
         thirdRecyclerView = view.findViewById(R.id.thirdRecyclerView);
         RecyclerViewAdaptor recyclerViewAdaptor3=new RecyclerViewAdaptor(R.layout.third_recycler_view_item,getActivity());
         thirdRecyclerView.setAdapter(recyclerViewAdaptor3);
@@ -132,13 +134,24 @@ public class HomeFragment extends Fragment {
 
         recyclerViewAdaptor.setItemClickListener(item -> {
             Toast.makeText(getActivity(), "Нажал на " + item.getItemName(), Toast.LENGTH_LONG).show();
-            Bundle data = new Bundle();
-            data.putString("ProductName", item.getItemName());
-            data.putString("ProductCost",String.valueOf(item.getCost()));
-            data.putString("ProductDescription",item.getDescription());
+            Bundle data= dataThatSendToOtherFragment(item);
+            Navigation.findNavController(view).navigate(R.id.productFragment, data);
+        });
+        recyclerViewAdaptor3.setItemClickListener(item -> {
+            Toast.makeText(getActivity(), "Нажал на " + item.getItemName(), Toast.LENGTH_LONG).show();
+            Bundle data= dataThatSendToOtherFragment(item);
             Navigation.findNavController(view).navigate(R.id.productFragment, data);
         });
 
+    }
+
+    private Bundle dataThatSendToOtherFragment(Item item){
+        Bundle data = new Bundle();
+        data.putString("ProductName", item.getItemName());
+        data.putString("ProductCost",String.valueOf(item.getCost()));
+        data.putString("ProductDescription",item.getDescription());
+        data.putInt("ProductCategory",item.getCategory());
+        return data;
     }
 
     @Override

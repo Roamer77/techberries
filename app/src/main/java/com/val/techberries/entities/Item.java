@@ -1,27 +1,33 @@
 package com.val.techberries.entities;
 
 
+import android.graphics.Bitmap;
 
-
-
-public class Item {
+public class Item  {
     private String itemName;
-    private int itemImage;
+    private Bitmap itemImage;
     private int id;
     private int cost;
     private String description;
-    private String category;
+    private int category;
     private String similarityTo;
 
 
     public Item() {
     }
 
-    public Item(String itemName, int itemImage,int cost,String description) {
+    public Item(String itemName, Bitmap itemImage,int cost,String description) {
         this.itemName = itemName;
         this.itemImage = itemImage;
         this.cost=cost;
         this.description=description;
+    }
+    public Item(String itemName, Bitmap itemImage,int cost,String description,int categoryId) {
+        this.itemName = itemName;
+        this.itemImage = itemImage;
+        this.cost=cost;
+        this.description=description;
+        this.category=categoryId;
     }
 
 
@@ -33,12 +39,20 @@ public class Item {
         this.id = id;
     }
 
+    public Bitmap getItemImage() {
+        return itemImage;
+    }
+
+    public void setItemImage(Bitmap itemImage) {
+        this.itemImage = itemImage;
+    }
+
     public String getItemName() {
         return itemName;
     }
 
-    public int getItemImage() {
-        return itemImage;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public int getCost() {
@@ -57,11 +71,11 @@ public class Item {
         this.description = description;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 
@@ -71,5 +85,18 @@ public class Item {
 
     public void setSimilarityTo(String similarityTo) {
         this.similarityTo = similarityTo;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "itemName='" + itemName + '\'' +
+                ", itemImage=" + itemImage +
+                ", id=" + id +
+                ", cost=" + cost +
+                ", description='" + description + '\'' +
+                ", category=" + category +
+                ", similarityTo='" + similarityTo + '\'' +
+                '}';
     }
 }

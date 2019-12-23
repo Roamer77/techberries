@@ -13,7 +13,7 @@ import com.val.techberries.entities.ItemToUserCart;
 import com.val.techberries.utils.dataBase.DAO.ItemToUserCartDao;
 
 
-@Database(entities = {ItemToUserCart.class},version = 1)
+@Database(entities = {ItemToUserCart.class},version = 5)
 public abstract class MyDataBase extends RoomDatabase {
     private  static MyDataBase instance;
 
@@ -22,7 +22,7 @@ public abstract class MyDataBase extends RoomDatabase {
     public  static synchronized MyDataBase getInstance(Context context){
         if(instance==null){
             instance= Room.databaseBuilder(context.getApplicationContext()
-                    , MyDataBase.class,"MyDataBase1")
+                    , MyDataBase.class,"MyDataBase4")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();

@@ -1,6 +1,7 @@
 package com.val.techberries.adaptors;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,9 @@ public class ViewPagerForProductActivity extends PagerAdapter {
     private Context context;
 
 
-    private ArrayList<Integer> imagesForViewPager;
+    private ArrayList<Bitmap> imagesForViewPager;
 
-    public ViewPagerForProductActivity(Context context, ArrayList<Integer> imagesForViewPager) {
+    public ViewPagerForProductActivity(Context context, ArrayList<Bitmap> imagesForViewPager) {
         this.context = context;
         this.imagesForViewPager = imagesForViewPager;
     }
@@ -32,7 +33,7 @@ public class ViewPagerForProductActivity extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view= LayoutInflater.from(context).inflate(R.layout.layout_for_product_view_pager,null);
         ImageView imageView= view.findViewById(R.id.productImage);
-        imageView.setImageDrawable(context.getResources().getDrawable(getImageAt(position)));
+        imageView.setImageBitmap(getImageAt(position));
         container.addView(view);
         return view;
     }
@@ -53,11 +54,16 @@ public class ViewPagerForProductActivity extends PagerAdapter {
     }
 
     //вернёт id  картинки для отображения
-    private int getImageAt(int position) {
+    private Bitmap getImageAt(int position) {
         return imagesForViewPager.get(position);
     }
 
-    public void setImagesForViewPager(ArrayList<Integer> imagesForViewPager) {
+    public void setImagesForViewPager(ArrayList<Bitmap> imagesForViewPager) {
         this.imagesForViewPager = imagesForViewPager;
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 }

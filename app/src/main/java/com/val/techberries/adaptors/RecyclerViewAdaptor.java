@@ -1,6 +1,7 @@
 package com.val.techberries.adaptors;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,8 +42,7 @@ public class RecyclerViewAdaptor extends ListAdapter<Item,RecyclerViewAdaptor.Vi
 
          @Override
          public boolean areContentsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
-             return oldItem.getCost()==newItem.getCost() && oldItem.getDescription().equals(newItem.getDescription())
-                     && oldItem.getItemImage()==newItem.getItemImage();
+             return oldItem.getCost()==newItem.getCost() && oldItem.getDescription().equals(newItem.getDescription());
          }
      };
     @NonNull
@@ -54,9 +54,9 @@ public class RecyclerViewAdaptor extends ListAdapter<Item,RecyclerViewAdaptor.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int imageId=getItem(position).getItemImage();
+        Bitmap image=getItem(position).getItemImage();
         holder.textView.setText(getItem(position).getItemName());
-        holder.itemImage.setImageDrawable(context.getResources().getDrawable(imageId));
+        holder.itemImage.setImageBitmap(image);
     }
 
 

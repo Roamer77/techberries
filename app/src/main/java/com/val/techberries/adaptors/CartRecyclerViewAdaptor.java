@@ -1,6 +1,7 @@
 package com.val.techberries.adaptors;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.val.techberries.R;
 import com.val.techberries.entities.ItemToUserCart;
 import com.val.techberries.interfacies.OnCartRecyclerViewItemClick;
 import com.val.techberries.interfacies.OnRecyclerViewItemClick;
+import com.val.techberries.utils.DbBitMapUtility.DbBitmapUtility;
 
 public class CartRecyclerViewAdaptor extends ListAdapter<ItemToUserCart, CartRecyclerViewAdaptor.ViewHolder> {
 
@@ -40,8 +42,7 @@ public class CartRecyclerViewAdaptor extends ListAdapter<ItemToUserCart, CartRec
         //сть в будущем добавяться обязательные для сравления атрибуты то их тут нужно прописать!
         @Override
         public boolean areContentsTheSame(@NonNull ItemToUserCart oldItem, @NonNull ItemToUserCart newItem) {
-            return oldItem.getCost() == newItem.getCost() && oldItem.getDescription().equals(newItem.getDescription())
-                    && oldItem.getItemImage() == newItem.getItemImage();
+            return oldItem.getCost() == newItem.getCost() && oldItem.getDescription().equals(newItem.getDescription());
         }
     };
 
@@ -54,12 +55,16 @@ public class CartRecyclerViewAdaptor extends ListAdapter<ItemToUserCart, CartRec
 
     @Override
     public void onBindViewHolder(@NonNull CartRecyclerViewAdaptor.ViewHolder holder, int position) {
-        int imageId= getItem(position).getItemImage();
+        DbBitmapUtility dbBitmapUtility=new DbBitmapUtility();
+        byte[] imageBytes=getItem(position).getItemImage();
+
+        Bitmap imageId= dbBitmapUtility.getImageFromBytes(imageBytes);
+
         int cost=getItem(position).getCost();
         String description=getItem(position).getDescription();
         String name=getItem(position).getItemName();
 
-        holder.image.setImageResource(imageId);
+        holder.image.setImageBitmap(imageId);
         holder.cost.append(String.valueOf(cost));
         holder.description.append(description);
         holder.name.append(name);

@@ -6,6 +6,7 @@
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -35,18 +36,18 @@
                 android:id="@+id/ProductImage_viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="416dp"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                app:layout_collapseMode="parallax">
+                app:layout_collapseMode="parallax"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
             </androidx.viewpager.widget.ViewPager>
+
             <me.relex.circleindicator.CircleIndicator
                 android:id="@+id/circleIndicator_for_viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 app:ci_drawable="@drawable/circle_indicator_stile"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 app:layout_collapseMode="parallax"
-                />
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -64,28 +65,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="250dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/ProductName"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Название: "
-                        android:textSize="20dp"/>
+                        android:textSize="20dp" />
+
                     <TextView
                         android:id="@+id/ProductCost"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Цена: "
-                        android:textSize="20dp"/>
+                        android:textSize="20dp" />
+
                     <TextView
-                        android:id="@+id/ProductDescription"
+                        android:id="@+id/ProductSeason"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="Описание: "
-                        android:textSize="20dp"/>
+                        android:text="Сезон: "
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/ProductSex"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Пол: "
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/ProductMaterialDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Состав материала: "
+                        android:textSize="20dp" />
                 </LinearLayout>
                 <!-- сюда вставляем любые элементы -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,6 +112,7 @@
                     android:layout_height="150dp">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/similarItemsRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/colorAccent"
@@ -105,6 +125,7 @@
                     android:layout_height="150dp">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/buyWithThisRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/colorPrimary"
@@ -118,10 +139,9 @@
         </androidx.core.widget.NestedScrollView>
 
 
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-   <LinearLayout
+
+    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="50dp"
        android:layout_above="@+id/toolbar9"

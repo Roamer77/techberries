@@ -68,12 +68,12 @@ public class CatalogFragment extends Fragment {
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Bundle data = new Bundle();
+                data.putInt("categoryID", childPosition+1);
 
                 Toast.makeText(getActivity(),"Нажал на "+childPosition,Toast.LENGTH_LONG).show();
-                Navigation.findNavController(view).navigate(R.id.prductListByCategoryFragment);
-               /* //в будующем в зависимости от катигории будут отображаться разные картинки
-                Intent intent=new Intent(CatalogActivity.this, ProductListByCategoryActivity.class);
-                startActivity(intent);*/
+                Navigation.findNavController(view).navigate(R.id.prductListByCategoryFragment,data);
+
                 return true;
             }
         });
