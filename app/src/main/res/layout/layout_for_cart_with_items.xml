@@ -5,5 +5,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemsInCart_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="550dp"/>
+    <Button
+
+        android:id="@+id/MakeOrderButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Офоримить заказ"
+        />
 </LinearLayout>

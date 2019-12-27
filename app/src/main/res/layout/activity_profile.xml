@@ -42,7 +42,14 @@
                     android:layout_marginTop="30dp"
                     android:background="@color/colorAccent"
                     android:text="Вход" />
-
+                <Button
+                    android:id="@+id/logout_from_account"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="-150dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Выход"
+                    android:background="@color/colorAccent"/>
             </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ListView
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/list_of_addresses"
+        android:layout_width="match_parent"
+        android:layout_height="545dp"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Вид оплаты"/>
+
+    <RelativeLayout
+        android:layout_alignBottom="@+id/list_of_addresses"
+        android:layout_below="@+id/select_delivery_type_pager"
+        android:id="@+id/priceLable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/wigthBackground">
+
+        <TextView
+            android:id="@+id/textPrice"
+            android:layout_width="231dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:paddingStart="5dp"
+            android:text="К оплате: ..."
+            android:textColor="@color/BlackColorforText"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="166dp"
+            android:layout_height="42dp"
+            android:layout_alignRight="@id/textPrice"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="-164dp"
+            android:background="@color/colorPrimary"
+            android:text="Оформить" />
+    </RelativeLayout>
+</RelativeLayout>

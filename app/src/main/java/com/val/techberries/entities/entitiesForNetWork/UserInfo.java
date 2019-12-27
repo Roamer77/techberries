@@ -21,6 +21,11 @@ public class UserInfo {
         this.userPassword = userPassword;
     }
 
+    public UserInfo(String userLogin, String userPassword) {
+        this.userLogin = userLogin;
+        this.userPassword = userPassword;
+    }
+
     public String getUserPhoneNumber() {
         return userPhoneNumber;
     }

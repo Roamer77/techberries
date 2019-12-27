@@ -15,6 +15,7 @@ import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
 import com.val.techberries.interfacies.MyCallBack;
 import com.val.techberries.interfacies.MyCallBackToRepo;
 import com.val.techberries.interfacies.MyCallMackForProdDescription;
+import com.val.techberries.utils.DbBitMapUtility.DbBitmapUtility;
 import com.val.techberries.utils.ImageConvertar.ConvertImageFromBase64;
 import com.val.techberries.utils.netWork.RequestAPI;
 
@@ -42,7 +43,7 @@ public class MainRepository {
     //реклма
     public  List<Item> getDataForHomePageAdvertisementRecyclerView(){
         List<Item> testData2 = new ArrayList<>();
-        BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.product_img0);
+        DbBitmapUtility dbBitmapUtility=new DbBitmapUtility();
 
         Collections.addAll(testData2, new Item("", BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.prod_place1),112,"qtyfdfs"),
                 new Item("",BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.prod_place2),345,"rwerwer"),

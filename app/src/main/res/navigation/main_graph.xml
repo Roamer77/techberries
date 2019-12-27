@@ -40,4 +40,14 @@
         android:name="com.val.techberries.fragments.LoginFragment"
         android:label="authorithation_layout"
         tools:layout="@layout/authorithation_layout" />
+    <fragment
+        android:id="@+id/makeOrderFragment"
+        android:name="com.val.techberries.fragments.MakeOrderFragment"
+        android:label="MakeOrderFragment" />
+    <fragment
+        android:id="@+id/selectPaymentTypeFragment"
+        android:name="com.val.techberries.fragments.Tabs.SelectPaymentTypeFragment"
+        android:label="courier_tab_layout"
+        tools:layout="@layout/courier_tab_layout" />
+
 </navigation>

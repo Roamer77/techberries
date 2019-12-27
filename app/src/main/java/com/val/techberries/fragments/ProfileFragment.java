@@ -1,6 +1,9 @@
 package com.val.techberries.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.val.techberries.R;
+import com.val.techberries.interfacies.CallBackToSaveUserInfo;
 import com.val.techberries.utils.NoScrollArrayList;
+import com.val.techberries.utils.netWork.DataToServerSender;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,11 +30,19 @@ public class ProfileFragment extends Fragment {
     private NoScrollArrayList infoList;
     private ConstraintLayout countryPicker;
     private Button openLoginFragment;
+    private Button logoutBtn;
+
+    private SharedPreferences sharedPreferences;
+
+    private DataToServerSender dataToServerSender;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.activity_profile,null);
+        logoutBtn=view.findViewById(R.id.logout_from_account);
+        dataToServerSender=new DataToServerSender();
+        sharedPreferences=getActivity().getPreferences(Context.MODE_PRIVATE);
         return view;
     }
 
@@ -57,6 +70,25 @@ public class ProfileFragment extends Fragment {
         });
 
         openLoginFragment.setOnClickListener(v-> Navigation.findNavController(view).navigate(R.id.registrationFragment));
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                    dataToServerSender.logoutFromAccount(new CallBackToSaveUserInfo() {
+                        @Override
+                        public void isOk(int state) {
+                            Log.e("MyTag","logoutBtn.logoutFromAccount: Разлогинился "+state);
+                            editor.putInt("Login",0);
+                            editor.commit();
+                        }
 
+                        @Override
+                        public void onError(String error) {
+
+                        }
+                    });
+
+            }
+        });
     }
 }

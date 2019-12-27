@@ -109,7 +109,7 @@ public class ProductFragment extends Fragment {
         Integer productCategory=getArguments().getInt("ProductCategory");
         String description = getArguments().getString("ProductDescription");
         Log.e("MyTag", "Name from extras " + name);
-
+        Log.e("MyTag", "productCategory from extras " + productCategory);
 
 
         adaptor=new ViewPagerForProductActivity(getActivity(),dataForViewPager_def);
@@ -157,7 +157,7 @@ public class ProductFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         similarProducts.setLayoutManager(linearLayoutManager);
 
-        viewModelForPridctFragment.getSimilarProducts(productCategory).observe(this, new Observer<List<Item>>() {
+        viewModelForPridctFragment.getSimilarProducts(2).observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
                 recyclerViewAdaptor.submitList(items);
@@ -169,7 +169,7 @@ public class ProductFragment extends Fragment {
         buyWithThisProduct.setAdapter(recyclerViewAdaptor1);
         buyWithThisProduct.setLayoutManager(linearLayoutManager1);
 
-        viewModelForPridctFragment.getSimilarProducts(productCategory).observe(this, new Observer<List<Item>>() {
+        viewModelForPridctFragment.alsoBuyWithCurrentItem(1).observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
                 recyclerViewAdaptor1.submitList(items);

@@ -1,5 +1,7 @@
 package com.val.techberries.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,19 +25,32 @@ import com.val.techberries.R;
 import com.val.techberries.adaptors.CartRecyclerViewAdaptor;
 import com.val.techberries.entities.ItemToUserCart;
 import com.val.techberries.modelViews.viewModelsForDB.UserCartViewModel;
+import com.val.techberries.utils.netWork.DataToServerSender;
 
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class CartFragment extends Fragment {
 
     private RecyclerView recyclerView;
-
+    private  Button makeOrder;
     private UserCartViewModel cartViewModel;
     private CartRecyclerViewAdaptor cartRecyclerViewAdaptor;
+    private DataToServerSender dataToServerSender;
+    private SharedPreferences sharedPreferences;
+    private   View view;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_for_cart_with_items, null);
+        view = inflater.inflate(R.layout.layout_for_cart_with_items, null);
+        makeOrder=view.findViewById(R.id.MakeOrderButton);
+        dataToServerSender=new DataToServerSender();
+        sharedPreferences=getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        makeOrder.setEnabled(false);
         return view;
     }
 
@@ -50,11 +65,29 @@ public class CartFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         cartViewModel = ViewModelProviders.of(this).get(UserCartViewModel.class);
+
+        if(sharedPreferences.getInt("Login",99)==1){
+            makeOrder.setEnabled(true);
+        }else {
+            makeOrder.setEnabled(false);
+        }
+
+
         cartViewModel.getAllItems().observe(this, new Observer<List<ItemToUserCart>>() {
 
             @Override
             public void onChanged(List<ItemToUserCart> itemToUserCarts) {
+                Log.e("MyTag","size= "+itemToUserCarts.size());
+                
+
                 cartRecyclerViewAdaptor.submitList(itemToUserCarts);
+
+                ///исправить нахуй
+                if(itemToUserCarts.size()==0){
+                    setNewLayout(R.layout.activity_cart);
+                }else if(itemToUserCarts.size()>0) {
+                    setNewLayout(R.layout.layout_for_cart_with_items);
+                }
             }
         });
         recyclerView.setAdapter(cartRecyclerViewAdaptor);
@@ -74,6 +107,41 @@ public class CartFragment extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
 
+        makeOrder.setOnClickListener(new View.OnClickListener() {
 
+
+            String pass=sharedPreferences.getString("UserPassword","-");
+            String login=sharedPreferences.getString("UserLogin","-");
+
+            OkHttpClient auth=new OkHttpClient.Builder().authenticator((route, response) -> {
+                Request request = response.request();
+                if (request.header("Authorization") != null){
+                    Log.e("MyTag","Пароль неверный");
+                    return null;
+                }
+                return request.newBuilder()
+                        .header("Authorization", Credentials.basic(login,pass))
+                        .build();
+            }).build();
+
+
+
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.makeOrderFragment);
+                if(dataToServerSender!=null){
+                    dataToServerSender.makeOrderRequest(auth);
+                }else Log.e("MyTag","dataToServerSender is null in CartFragment");
+            }
+        });
+
+    }
+
+    private void setNewLayout(int id){
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(id, null);
+        ViewGroup rootView = (ViewGroup) getView();
+        //rootView.removeAllViews();
+        rootView.addView(view);
     }
 }
