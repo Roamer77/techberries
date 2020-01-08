@@ -32,6 +32,7 @@
                 android:inputType="textPersonName"
                 android:lines="1"
                 android:textColorHint="@color/BlackColorforText"
+                android:imeOptions="actionGo"
                  />
 
             <LinearLayout

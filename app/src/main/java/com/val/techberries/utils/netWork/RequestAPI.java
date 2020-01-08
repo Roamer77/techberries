@@ -43,7 +43,7 @@ public class RequestAPI {
 
     }
 
-    public void doPostRequestForProductBigImages(String productName ,MyCallBack myCallBack) {
+    public void doPostRequestForProductBigImages(String productName, MyCallBack myCallBack) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(imageBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -66,12 +66,12 @@ public class RequestAPI {
                     int lenForBig3 = imageFromServer.getBigImage3().length();
                     Log.e("MyTag", "Длинна 1= " + lenForBig1 + "Длинна 2= " + lenForBig2 + " Длинна 3= " + lenForBig3);
 
-                    Map<String,String> tmpData=new HashMap();
-                    tmpData.put("big1",imageFromServer.getBigImage1());
-                    tmpData.put("big2",imageFromServer.getBigImage2());
-                    tmpData.put("big3",imageFromServer.getBigImage3());
+                    Map<String, String> tmpData = new HashMap();
+                    tmpData.put("big1", imageFromServer.getBigImage1());
+                    tmpData.put("big2", imageFromServer.getBigImage2());
+                    tmpData.put("big3", imageFromServer.getBigImage3());
 
-                    if(myCallBack!=null){
+                    if (myCallBack != null) {
                         myCallBack.onSuccess(tmpData);
                     }
                 } catch (NullPointerException e) {
@@ -87,7 +87,7 @@ public class RequestAPI {
     }
 
 
-    public void doGetRequestForProductDescriptionByName(String productName , MyCallMackForProdDescription myCallBack) {
+    public void doGetRequestForProductDescriptionByName(String productName, MyCallMackForProdDescription myCallBack) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)
@@ -109,8 +109,8 @@ public class RequestAPI {
                 try {
                     //сетаем в обект инфу о продукте
 
-                    if(myCallBack!=null){
-                           myCallBack.onSuccess(productDescription);
+                    if (myCallBack != null) {
+                        myCallBack.onSuccess(productDescription);
                     }
                     //
                 } catch (NullPointerException e) {
@@ -126,52 +126,88 @@ public class RequestAPI {
         });
     }
 
-    public void doPostRequestForProductsSmallImagesByCategory(int categoryId, MyCallBack myCallBack){
+    public void doPostRequestForProductsSmallImagesByCategory(int categoryId, MyCallBack myCallBack) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(imageBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client.build()).build();
         RequestApiInterface requestApiInterface = retrofit.create(RequestApiInterface.class);
 
-        Call<ResponseBody> getSmallImages=requestApiInterface.getSmallImages(categoryId);
+        Call<ResponseBody> getSmallImages = requestApiInterface.getSmallImages(categoryId);
 
-       Callback<ResponseBody> callback=  new Callback<ResponseBody>() {
+        Callback<ResponseBody> callback = new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(!response.isSuccessful()){
-                    Log.e("MyTag","Ошибка "+response.code());
+                if (!response.isSuccessful()) {
+                    Log.e("MyTag", "Ошибка " + response.code());
                 }
-                Gson gson=new Gson();
-                String resData="";
+                Gson gson = new Gson();
+                String resData = "";
                 try {
-                    ResponseBody responseBody=response.body();
-                    resData=responseBody.string();
-                    Map images=gson.fromJson(resData,Map.class);
-                    if(myCallBack!=null){
+                    ResponseBody responseBody = response.body();
+                    resData = responseBody.string();
+                    Map images = gson.fromJson(resData, Map.class);
+                    if (myCallBack != null) {
                         myCallBack.onSuccess(images);
                     }
-                    Log.e("MyTag","Small images key set"+ images.keySet());
+                    Log.e("MyTag", "Small images key set" + images.keySet());
 
-                }catch (IOException e){
+                } catch (IOException e) {
                     Log.e("MyTag", "Ошибка при разборе объекта " + e.getMessage());
-                }
-                catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     Log.e("MyTag", "Ошибка при разборе объекта " + e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                if(myCallBack!=null){
+                if (myCallBack != null) {
                     myCallBack.onError(t);
                 }
             }
         };
 
-       getSmallImages.enqueue(callback);
+        getSmallImages.enqueue(callback);
 
     }
 
+    public void doGetRequestForListOfSmallImagesByName(String name, MyCallBack myCallBack) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(imageBaseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build()).build();
+        RequestApiInterface requestApiInterface = retrofit.create(RequestApiInterface.class);
+
+        Call<ResponseBody> getSmallImages = requestApiInterface.getSmallImagesByName(name);
+        getSmallImages.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if (!response.isSuccessful()) {
+                    Log.e("MyTag", "Ошибка " + response.code());
+                }
+                Gson gson = new Gson();
+                String resData = "";
+                try {
+                    ResponseBody responseBody = response.body();
+                    resData = responseBody.string();
+                    Map images = gson.fromJson(resData, Map.class);
+                    if (myCallBack != null) {
+                        myCallBack.onSuccess(images);
+                    }
+                    Log.e("MyTag", "(byName)Small images key set" + images.keySet());
+
+                } catch (IOException e) {
+                    Log.e("MyTag", "Ошибка при разборе объекта " + e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
 
 
 }

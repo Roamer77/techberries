@@ -9,16 +9,26 @@ public class ItemToUserCart  {
     @PrimaryKey(autoGenerate = true)
     int id;
 
+    int productID;
     int cost;
     String itemName;
     byte[] itemImage;
     String description;
 
-    public ItemToUserCart(int cost, String itemName, byte[] itemImage, String description) {
+    public ItemToUserCart(int cost, String itemName, byte[] itemImage, String description,int productID) {
         this.cost = cost;
         this.itemName = itemName;
         this.itemImage = itemImage;
         this.description = description;
+        this.productID=productID;
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     public int getId() {

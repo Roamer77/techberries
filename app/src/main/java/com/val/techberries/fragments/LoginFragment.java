@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -90,12 +91,15 @@ public class LoginFragment extends Fragment {
                     editor.putInt("Login",1);
                     editor.commit();
                     Log.e("MyTag","SendAuthData сохранил всё в sharedPreferences ОК");
+
+                    Toast.makeText(getContext(),"Успешный вход",Toast.LENGTH_LONG).show();
                 }
 
                @Override
                public void onError(String error) {
                    Log.e("MyTag","SendAuthData не ОК: "+error);
                    editor.putInt("Login",0);
+                   Toast.makeText(getContext(),"Логин или пароль не верны",Toast.LENGTH_LONG).show();
                }
            });
             return null;

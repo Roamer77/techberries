@@ -138,11 +138,13 @@ public class ProductFragment extends Fragment {
                  productSex.append(description.getSex());
                  productMaterialDescription.append(description.getSoleMaterial());
 
+                 itemToCart.setId(description.getId()); //дабавил id
                  itemToCart.setItemName(name);
                  itemToCart.setCost(Integer.valueOf(cost ) );
                  itemToCart.setDescription("\n Сезон: "+description.getSeason() +"\n "
                          +"Пол: "+description.getSex()+"\n "
                          +"Состав матиреала: "+description.getSoleMaterial());
+                 Log.e("MyTag","Current item "+ itemToCart.toString());
              }
 
              @Override
@@ -195,7 +197,7 @@ public class ProductFragment extends Fragment {
 
                     DbBitmapUtility dbBitmapUtility = new DbBitmapUtility();
                     byte[] image = dbBitmapUtility.getBytes(tmpObj.getItemImage());
-                    userCartViewModel.insert(new ItemToUserCart(tmpObj.getCost(), tmpObj.getItemName(), image, tmpObj.getDescription()));
+                    userCartViewModel.insert(new ItemToUserCart(tmpObj.getCost(), tmpObj.getItemName(), image, tmpObj.getDescription(),tmpObj.getId()));
 
                 }
 

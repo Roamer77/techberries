@@ -1,5 +1,6 @@
 package com.val.techberries.utils.netWork.netInterfaces;
 
+import com.val.techberries.entities.entitiesForNetWork.Order;
 import com.val.techberries.entities.entitiesForNetWork.UserInfo;
 import com.val.techberries.entities.entitiesForNetWork.BigImageFromServer;
 import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
@@ -33,9 +34,12 @@ public interface RequestApiInterface {
     @POST("/autharization/auth")
     Call<String> sendAuthInfo();
 
-    @GET("/order/makeOrder")
-    Call<String> makeOrder();
+    @POST("/order/makeOrder")
+    Call<String> makeOrder(@Body Order order);
 
     @GET("/logout")
     Call<String> logoutFromAccount();
+
+    @GET("/image/getListOfSmallImagesByName")
+    Call<ResponseBody> getSmallImagesByName(@Query("name") String name);
 }

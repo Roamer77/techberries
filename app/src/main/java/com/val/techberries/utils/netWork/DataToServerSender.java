@@ -3,6 +3,7 @@ package com.val.techberries.utils.netWork;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.val.techberries.entities.entitiesForNetWork.Order;
 import com.val.techberries.entities.entitiesForNetWork.UserInfo;
 import com.val.techberries.interfacies.CallBackToSaveUserInfo;
 import com.val.techberries.utils.netWork.netInterfaces.RequestApiInterface;
@@ -24,31 +25,33 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DataToServerSender {
 
-    final  String baseURL="http://192.168.176.17:8080/registration/";
-    final  String authURL="http://192.168.176.17:8080/autharization/";
-    final  String orderRquestURL="http://192.168.176.17:8080/order/";
-    final String logoutURL="http://192.168.176.17:8080/logout/";
-    private  HttpLoggingInterceptor interceptor;
+    final String baseURL = "http://192.168.176.17:8080/registration/";
+    final String authURL = "http://192.168.176.17:8080/autharization/";
+    final String orderRquestURL = "http://192.168.176.17:8080/order/";
+    final String logoutURL = "http://192.168.176.17:8080/logout/";
+    final String findProductURL = "http://192.168.176.17:8080/productInfo/getProductsByName";
+    private HttpLoggingInterceptor interceptor;
 
     private OkHttpClient.Builder client;
-    private  OkHttpClient auth;
+    private OkHttpClient auth;
 
-    public DataToServerSender(){
-        interceptor=new HttpLoggingInterceptor();
+    public DataToServerSender() {
+        interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        client=new OkHttpClient.Builder().addInterceptor(interceptor);
+        client = new OkHttpClient.Builder().addInterceptor(interceptor);
 
 
     }
-    public void  sendUserRegistrationInfo(UserInfo userInfo){
+
+    public void sendUserRegistrationInfo(UserInfo userInfo) {
 
 
-        Call<UserInfo> status= retrofitConfig(baseURL).sendRegistrationInfo(userInfo);
+        Call<UserInfo> status = retrofitConfig(baseURL).sendRegistrationInfo(userInfo);
         status.enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                if(response.isSuccessful())
-                Log.e("MyTag","Данные для регестравции отправлены"+response.body().toString());
+                if (response.isSuccessful())
+                    Log.e("MyTag", "Данные для регестравции отправлены" + response.body().toString());
             }
 
             @Override
@@ -58,17 +61,16 @@ public class DataToServerSender {
 
     }
 
-    public void sendAuthDataToServer(OkHttpClient auth,CallBackToSaveUserInfo callBackToSaveUserInfo){
-        Call<String> status=retrofitConfigWithAuth(authURL,auth).sendAuthInfo();
+    public void sendAuthDataToServer(OkHttpClient auth, CallBackToSaveUserInfo callBackToSaveUserInfo) {
+        Call<String> status = retrofitConfigWithAuth(authURL, auth).sendAuthInfo();
         status.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if(response.isSuccessful()){
-                    Log.e("MyTag","Данные для регестравции отправлены. Ответ: "+response.body());
+                if (response.isSuccessful()) {
+                    Log.e("MyTag", "Данные для регестравции отправлены. Ответ: " + response.body());
                     callBackToSaveUserInfo.isOk(Integer.valueOf(response.body()));
-                }
-                else{
-                    Log.e("MyTag","Ошибка: "+response.code());
+                } else {
+                    Log.e("MyTag", "Ошибка: " + response.code());
                     callBackToSaveUserInfo.onError("Login or password is not available");
                 }
 
@@ -81,41 +83,46 @@ public class DataToServerSender {
         });
     }
 
-    public  void makeOrderRequest(OkHttpClient auth){
-           Call<String> test=retrofitConfigWithAuth(orderRquestURL,auth).makeOrder();
+    public void makeOrderRequest(OkHttpClient auth, Order order) {
+        Call<String> test = retrofitConfigWithAuth(orderRquestURL, auth).makeOrder(order);
         test.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()){
-                    Log.e("MyTag","makeOrderRequest всё OK "+response.body());
+                if (response.isSuccessful()) {
+                    Log.e("MyTag", "makeOrderRequest всё OK " + response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("MyTag","makeOrderRequest всё ошибка  "+t.getMessage());
+                Log.e("MyTag", "makeOrderRequest всё ошибка  " + t.getMessage());
             }
         });
     }
-    public void logoutFromAccount(CallBackToSaveUserInfo callBackToSaveUserInfo){
-        Call<String> test=retrofitConfig(logoutURL).logoutFromAccount();
+
+    public void logoutFromAccount(CallBackToSaveUserInfo callBackToSaveUserInfo) {
+        Call<String> test = retrofitConfig(logoutURL).logoutFromAccount();
         test.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()){
-                    Log.e("MyTag","logoutFromAccount всё OK "+response.body());
+                if (response.isSuccessful()) {
+                    Log.e("MyTag", "logoutFromAccount всё OK " + response.body());
                     callBackToSaveUserInfo.isOk(1);
-                }else
+                } else
                     callBackToSaveUserInfo.onError("Почему-то не разлогинился");
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("MyTag","logoutFromAccount "+ t.getMessage());
+                Log.e("MyTag", "logoutFromAccount " + t.getMessage());
             }
         });
     }
-    private RequestApiInterface retrofitConfig(String url){
+
+
+
+
+    private RequestApiInterface retrofitConfig(String url) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -123,7 +130,8 @@ public class DataToServerSender {
         RequestApiInterface requestApiInterface = retrofit.create(RequestApiInterface.class);
         return requestApiInterface;
     }
-    private RequestApiInterface retrofitConfigWithAuth(String url,OkHttpClient auth){
+
+    private RequestApiInterface retrofitConfigWithAuth(String url, OkHttpClient auth) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())

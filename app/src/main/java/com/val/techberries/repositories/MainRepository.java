@@ -69,6 +69,9 @@ public class MainRepository {
         new GetDescriptionOfProduct(name).execute(repoCallBack);
     }
 
+    public  void getSmallImagesByName(String name,MyCallBackToRepo<Item> repoCallBack){
+        new GetSmallImagesByName(name).execute(repoCallBack);
+    }
 
     private class GetImagesAndNames extends AsyncTask<MyCallBackToRepo<Item>,Void,List<Item>>{
         RequestAPI requestAPI=new RequestAPI();
@@ -80,7 +83,7 @@ public class MainRepository {
         }
 
         @Override
-        protected List<Item> doInBackground(MyCallBackToRepo... voids) {
+        protected List<Item> doInBackground(MyCallBackToRepo... args) {
 
 
             requestAPI.doPostRequestForProductsSmallImagesByCategory(categoryId, new MyCallBack() {
@@ -99,7 +102,7 @@ public class MainRepository {
                         productEntities.add(tmpItem);
                     }
 
-                    voids[0].onOk(productEntities);
+                    args[0].onOk(productEntities);
                 }
 
                 @Override
@@ -112,8 +115,6 @@ public class MainRepository {
         }
 
     }
-
-
 
 
     private class GetBigImagesFromServer extends  AsyncTask<MyCallBackToRepo<Bitmap>,Void,Void>{
@@ -178,6 +179,46 @@ public class MainRepository {
                 }
             });
             return null;
+        }
+    }
+
+    private class  GetSmallImagesByName extends AsyncTask<MyCallBackToRepo<Item>,Void,List<Item>>{
+        RequestAPI requestAPI=new RequestAPI();
+        List<Item> productEntities=new ArrayList<>();
+        String name="";
+
+        public GetSmallImagesByName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        protected List<Item> doInBackground(MyCallBackToRepo<Item>... args) {
+            requestAPI.doGetRequestForListOfSmallImagesByName(name, new MyCallBack() {
+                @Override
+                public void onSuccess(Map nameImagesData) {
+                    ConvertImageFromBase64 convertImageFromBase64=new ConvertImageFromBase64();
+                    Object[] names=nameImagesData.keySet().toArray();
+                    Object[] images=nameImagesData.values().toArray();
+
+                    for (int i=0;i<nameImagesData.size();i++){
+                        Item tmpItem=new Item((String) names[i],convertImageFromBase64.convertFromBase64toImage((String) images[i]),124,"myDiscription");
+                        productEntities.add(tmpItem);
+                    }
+
+                    args[0].onOk(productEntities);
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
         }
     }
 

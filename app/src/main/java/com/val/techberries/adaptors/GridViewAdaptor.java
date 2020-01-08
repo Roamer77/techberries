@@ -93,7 +93,7 @@ public class GridViewAdaptor extends BaseAdapter {
         if (tmpObj != null) {
             DbBitmapUtility dbBitmapUtility = new DbBitmapUtility();
             byte[] image = dbBitmapUtility.getBytes(tmpObj.getItemImage());
-            userCartViewModel.insert(new ItemToUserCart(tmpObj.getCost(), tmpObj.getItemName(), image, tmpObj.getDescription()));
+            userCartViewModel.insert(new ItemToUserCart(tmpObj.getCost(), tmpObj.getItemName(), image, tmpObj.getDescription(),tmpObj.getId()));
 
         }
     }

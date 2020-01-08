@@ -2,12 +2,16 @@ package com.val.techberries.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.val.techberries.entities.Item;
 import com.val.techberries.R;
 import com.val.techberries.adaptors.RecyclerViewAdaptor;
+import com.val.techberries.interfacies.MyCallBackToRepo;
 import com.val.techberries.modelViews.ViewModelForHomePage;
 
 import java.util.ArrayList;
@@ -44,10 +49,13 @@ public class HomeFragment extends Fragment {
 
     private Toolbar toolbar;
 
+    private EditText searchLine;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, null);
+        searchLine=view.findViewById(R.id.search_line_et);
         return view;
     }
 
@@ -141,6 +149,19 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getActivity(), "Нажал на " + item.getItemName(), Toast.LENGTH_LONG).show();
             Bundle data= dataThatSendToOtherFragment(item);
             Navigation.findNavController(view).navigate(R.id.productFragment, data);
+        });
+
+        searchLine.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    String name = searchLine.getText().toString();
+                    Bundle data = new Bundle();
+                    data.putString("ProductThatNeedToFind",name);
+                    Navigation.findNavController(view).navigate(R.id.prductListByCategoryFragment,data);
+                }
+                return false;
+            }
         });
 
     }

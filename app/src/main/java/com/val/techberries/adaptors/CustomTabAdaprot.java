@@ -9,7 +9,8 @@ import com.val.techberries.fragments.Tabs.PickUpTab;
 public class CustomTabAdaprot extends FragmentStatePagerAdapter {
 
     private int tubNumber;
-
+    private Fragment pickUpTab=new PickUpTab();
+    private Fragment courierTab= new CourierTab();
     public CustomTabAdaprot(FragmentManager fm, Integer tubNumber) {
         super(fm);
         this.tubNumber = tubNumber;
@@ -19,9 +20,9 @@ public class CustomTabAdaprot extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new PickUpTab();
+                return pickUpTab;
             case 1:
-                return new CourierTab();
+                return courierTab;
             default:
                 return null;
         }

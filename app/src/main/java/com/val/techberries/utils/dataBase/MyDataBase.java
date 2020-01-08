@@ -13,7 +13,7 @@ import com.val.techberries.entities.ItemToUserCart;
 import com.val.techberries.utils.dataBase.DAO.ItemToUserCartDao;
 
 
-@Database(entities = {ItemToUserCart.class},version = 5)
+@Database(entities = {ItemToUserCart.class},version = 7)
 public abstract class MyDataBase extends RoomDatabase {
     private  static MyDataBase instance;
 

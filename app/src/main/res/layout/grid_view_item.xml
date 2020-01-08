@@ -13,8 +13,10 @@
             android:background="@color/colorPrimary">
             <ImageView
                 android:id="@+id/itemImage"
-                android:layout_width="match_parent"
+                android:layout_width="170dp"
                 android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/ic_flag"/>
 
             <TextView
@@ -23,8 +25,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/itemImage"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="7dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="3dp"
                 android:paddingLeft="14dp"
                 android:text="Cost" />
 
@@ -54,8 +56,9 @@
                 android:layout_height="49dp"
                 android:layout_below="@+id/prodctListGridView_productCost"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="4dp"
+                android:paddingLeft="14dp"
                 android:text="Description" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

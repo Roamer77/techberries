@@ -1,11 +1,16 @@
 package com.val.techberries.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,10 +32,13 @@ public class CatalogFragment extends Fragment {
     private NoScrollListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
 
+    private EditText searchLine;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.activity_catalog,null);
+        searchLine=view.findViewById(R.id.search_line_et);
         return view;
     }
 
@@ -63,7 +71,18 @@ public class CatalogFragment extends Fragment {
         expandableListView.setAdapter(expandableListAdapter);
 
 
-
+        searchLine.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    String name = searchLine.getText().toString();
+                    Bundle data = new Bundle();
+                    data.putString("ProductThatNeedToFind",name);
+                    Navigation.findNavController(view).navigate(R.id.prductListByCategoryFragment,data);
+                }
+                return false;
+            }
+        });
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override

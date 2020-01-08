@@ -1,14 +1,19 @@
 package com.val.techberries.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,12 +38,28 @@ public class PrductListByCategoryFragment extends Fragment {
     private Button gridViewStyleBtn;
     private Button filterListBtn;
     private Button filterByPopularityBtn;
-    private Integer styleModeID=1;
+    private Integer styleModeID = 1;
     private UserCartViewModel userCartViewModel;
+    private ViewModelForProductListByCategory viewModelForProductListByCategory;
+    private GridViewAdaptor gridViewAdaptor;
+
+    private EditText searchLine;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.activity_product_list_by_category,null);
+        View view = inflater.inflate(R.layout.activity_product_list_by_category, null);
+
+        viewModelForProductListByCategory = new ViewModelForProductListByCategory();
+
+        searchLine = view.findViewById(R.id.search_line_et);
+
+        gridView = view.findViewById(R.id.prodctListGridView);
+        gridViewStyleBtn = view.findViewById(R.id.styleModeBtn);
+
+        filterByPopularityBtn = view.findViewById(R.id.filterByPopularity);
+        filterListBtn = view.findViewById(R.id.filterListBtn);
+
         return view;
     }
 
@@ -46,38 +67,47 @@ public class PrductListByCategoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        gridView=view. findViewById(R.id.prodctListGridView);
-        gridViewStyleBtn=view. findViewById(R.id.styleModeBtn);
-
-        filterByPopularityBtn=view.findViewById(R.id.filterByPopularity);
-        filterListBtn=view. findViewById(R.id.filterListBtn);
-
-        ArrayList<Item> defData=new ArrayList<>();
+        ArrayList<Item> defData = new ArrayList<>();
         defData.add(new Item());
         defData.add(new Item());
 
-        GridViewAdaptor gridViewAdaptor =new GridViewAdaptor(getActivity(),defData);
+        gridViewAdaptor = new GridViewAdaptor(getActivity(), defData);
 
-        int categoryId=getArguments().getInt("categoryID");
+        int categoryId = getArguments().getInt("categoryID");
 
         userCartViewModel = ViewModelProviders.of(this).get(UserCartViewModel.class);
         gridViewAdaptor.setUserCartViewModel(userCartViewModel);
 
-        ViewModelForProductListByCategory viewModelForProductListByCategory=new ViewModelForProductListByCategory();
 
-        viewModelForProductListByCategory.getDataForProductListByCategory(categoryId,new MyCallBackToRepo<Item>() {
-           @Override
-           public void onOk(List<Item> nameImagesData) {
-               gridViewAdaptor.setGridViewData((ArrayList<Item>) nameImagesData);
-               gridViewAdaptor.notifyDataSetChanged();
-           }
+        viewModelForProductListByCategory.getDataForProductListByCategory(categoryId, new MyCallBackToRepo<Item>() {
+            @Override
+            public void onOk(List<Item> nameImagesData) {
+                gridViewAdaptor.setGridViewData((ArrayList<Item>) nameImagesData);
+                gridViewAdaptor.notifyDataSetChanged();
+            }
 
-           @Override
-           public void onError(Throwable throwable) {
+            @Override
+            public void onError(Throwable throwable) {
 
-           }
-       });
+            }
+        });
 
+        if (getArguments().getString("ProductThatNeedToFind") != null) {
+            String name = getArguments().getString("ProductThatNeedToFind");
+            updateGridViewData(name);
+        }
+
+        searchLine.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    String name = searchLine.getText().toString();
+                    updateGridViewData(name);
+                }
+
+                return false;
+            }
+        });
 
 
         gridView.setAdapter(gridViewAdaptor);
@@ -85,7 +115,7 @@ public class PrductListByCategoryFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),"Нажал на "+position,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Нажал на " + position, Toast.LENGTH_LONG).show();
 
             }
         });
@@ -94,10 +124,10 @@ public class PrductListByCategoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 gridView.setNumColumns(styleModeID);
-                if(styleModeID<2){
-                    styleModeID=styleModeID+1;
-                }else {
-                    styleModeID=1;
+                if (styleModeID < 2) {
+                    styleModeID = styleModeID + 1;
+                } else {
+                    styleModeID = 1;
                 }
             }
         });
@@ -106,26 +136,43 @@ public class PrductListByCategoryFragment extends Fragment {
         filterByPopularityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialog=new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 initTipDialog(alertDialog);
             }
         });
     }
-    private void initTipDialog(AlertDialog.Builder alert) {
-        View customLayout=getLayoutInflater().inflate(R.layout.filter_list_for_filter_dialog,null);
 
-        ArrayList<String> filters=new ArrayList<>();
-        Collections.addAll(filters,"По цене","По производителю","По размеру");
-        ListView listView=customLayout.findViewById(R.id.filter_list_for_filter_dialog);
-        listView.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1,filters));
+    private void initTipDialog(AlertDialog.Builder alert) {
+        View customLayout = getLayoutInflater().inflate(R.layout.filter_list_for_filter_dialog, null);
+
+        ArrayList<String> filters = new ArrayList<>();
+        Collections.addAll(filters, "По цене", "По производителю", "По размеру");
+        ListView listView = customLayout.findViewById(R.id.filter_list_for_filter_dialog);
+        listView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, filters));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),"Нажал на "+position,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Нажал на " + position, Toast.LENGTH_LONG).show();
             }
         });
         alert.setView(customLayout);
-        AlertDialog dialog =alert.create();
+        AlertDialog dialog = alert.create();
         dialog.show();
     }
+
+    private void updateGridViewData(String name) {
+        viewModelForProductListByCategory.getDataForProductListByName(name, new MyCallBackToRepo<Item>() {
+            @Override
+            public void onOk(List<Item> nameImagesData) {
+                gridViewAdaptor.setGridViewData((ArrayList<Item>) nameImagesData);
+                gridViewAdaptor.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
+    }
+
 }

@@ -2,9 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/text"
+        android:text="Выберите пункт самовывоза"
+        android:textColor="@color/BlackColorforText"
+        android:textSize="20dp"
+        android:paddingTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <ListView
+        android:layout_below="@+id/text"
         android:id="@+id/list_of_addresses"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"/>
 
 </RelativeLayout>

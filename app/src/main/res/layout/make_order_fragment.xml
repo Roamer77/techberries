@@ -31,24 +31,37 @@
             android:background="@color/wigthBackground">
 
             <TextView
-                android:id="@+id/textPrice"
+                android:id="@+id/productCounter"
                 android:layout_width="231dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:paddingStart="5dp"
+                android:text="Товаров: "
+                android:textColor="@color/BlackColorforText"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/fullProductPrice"
+                android:layout_width="241dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="10dp"
                 android:paddingStart="5dp"
-                android:text="К оплате: ..."
+                android:text="К оплате: "
                 android:textColor="@color/BlackColorforText"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/nextBtn"
                 android:layout_width="166dp"
                 android:layout_height="42dp"
-                android:layout_alignRight="@id/textPrice"
+                android:layout_alignRight="@id/fullProductPrice"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="2dp"
