@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.val.techberries.entities.Advertising;
 import com.val.techberries.entities.Item;
 import com.val.techberries.interfacies.MyCallBack;
 import com.val.techberries.interfacies.MyCallBackToRepo;
@@ -24,7 +25,7 @@ public class ViewModelForHomePage extends AndroidViewModel {
 
     private MainRepository mainRepository;
 
-    private MutableLiveData<List<Item>> advertisement;
+    private MutableLiveData<List<Advertising>> advertisement;
     private MutableLiveData<List<Item>> dataForFirstRecyclerView;
     private MutableLiveData<List<Item>> dataForThirdRecyclerView;
 
@@ -75,11 +76,22 @@ public class ViewModelForHomePage extends AndroidViewModel {
     }
 
 
-    public LiveData<List<Item>> getDataFroHomePageAdvertisementRecyclerView() {
-        List<Item> items = mainRepository.getDataForHomePageAdvertisementRecyclerView();
+    public LiveData<List<Advertising>> getDataFroHomePageAdvertisementRecyclerView() {
+
         if (advertisement == null) {
             advertisement = new MutableLiveData<>();
-            advertisement.setValue(items);
+            mainRepository.getSimpleAdvertising(new MyCallBackToRepo<Advertising>() {
+                @Override
+                public void onOk(List<Advertising> nameImagesData) {
+                    advertisement.setValue(nameImagesData);
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+
+                }
+            });
+
         }
         return advertisement;
     }

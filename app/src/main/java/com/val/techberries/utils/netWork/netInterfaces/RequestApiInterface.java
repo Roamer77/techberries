@@ -1,9 +1,12 @@
 package com.val.techberries.utils.netWork.netInterfaces;
 
+import com.val.techberries.entities.entitiesForNetWork.AdvertisingFromServer;
 import com.val.techberries.entities.entitiesForNetWork.Order;
 import com.val.techberries.entities.entitiesForNetWork.UserInfo;
 import com.val.techberries.entities.entitiesForNetWork.BigImageFromServer;
 import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
+
+import java.util.List;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -19,16 +22,16 @@ import retrofit2.http.Query;
 public interface RequestApiInterface {
 
     @GET("/productInfo/productDescription")
-    Call<ProductDescription> getProductDescriptionByName(@Query("productName")String productName);
+    Call<ProductDescription> getProductDescriptionByName(@Query("productName") String productName);
 
     @POST("/image/getListOfBigImage")
     Call<BigImageFromServer> getImagesFroProduct(@Query("productName") String productName);
 
     @GET("/image/getListOfSmallImages")
-    Call<ResponseBody> getSmallImages(@Query("categoryId") int categoryId );
+    Call<ResponseBody> getSmallImages(@Query("categoryId") int categoryId);
 
     @POST("/registration/register")
-    Call<UserInfo> sendRegistrationInfo( @Body UserInfo userInfo);
+    Call<UserInfo> sendRegistrationInfo(@Body UserInfo userInfo);
 
 
     @POST("/autharization/auth")
@@ -42,4 +45,10 @@ public interface RequestApiInterface {
 
     @GET("/image/getListOfSmallImagesByName")
     Call<ResponseBody> getSmallImagesByName(@Query("name") String name);
+
+    @GET("/advertising/getAdvertising")
+    Call<List<AdvertisingFromServer>> getSimpleAdvertising();
+
+    @POST("/image/getSmallImagesByCategoryAndSex")
+    Call<ResponseBody> getSmallImagesByCategoryAndSex(@Query("sex") String sex,@Query("categotyId") long categotyId );
 }

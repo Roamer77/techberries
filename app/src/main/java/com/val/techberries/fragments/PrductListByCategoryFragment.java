@@ -36,8 +36,7 @@ import java.util.List;
 public class PrductListByCategoryFragment extends Fragment {
     private GridView gridView;
     private Button gridViewStyleBtn;
-    private Button filterListBtn;
-    private Button filterByPopularityBtn;
+    private Button filterByBtn;
     private Integer styleModeID = 1;
     private UserCartViewModel userCartViewModel;
     private ViewModelForProductListByCategory viewModelForProductListByCategory;
@@ -57,8 +56,7 @@ public class PrductListByCategoryFragment extends Fragment {
         gridView = view.findViewById(R.id.prodctListGridView);
         gridViewStyleBtn = view.findViewById(R.id.styleModeBtn);
 
-        filterByPopularityBtn = view.findViewById(R.id.filterByPopularity);
-        filterListBtn = view.findViewById(R.id.filterListBtn);
+        filterByBtn = view.findViewById(R.id.filterBy);
 
         return view;
     }
@@ -68,18 +66,32 @@ public class PrductListByCategoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ArrayList<Item> defData = new ArrayList<>();
-        defData.add(new Item());
-        defData.add(new Item());
+        defData.add(new Item("...",null,111,"desc"));
+        defData.add(new Item("...",null,111,"desc"));
+
 
         gridViewAdaptor = new GridViewAdaptor(getActivity(), defData);
 
-        int categoryId = getArguments().getInt("categoryID");
+        long categoryId = getArguments().getLong("categoryID");
+        String sex=getArguments().getString("sex");
 
         userCartViewModel = ViewModelProviders.of(this).get(UserCartViewModel.class);
         gridViewAdaptor.setUserCartViewModel(userCartViewModel);
 
 
-        viewModelForProductListByCategory.getDataForProductListByCategory(categoryId, new MyCallBackToRepo<Item>() {
+      /*  viewModelForProductListByCategory.getDataForProductListByCategory(categoryId, new MyCallBackToRepo<Item>() {
+            @Override
+            public void onOk(List<Item> nameImagesData) {
+                gridViewAdaptor.setGridViewData((ArrayList<Item>) nameImagesData);
+                gridViewAdaptor.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });*/
+        viewModelForProductListByCategory.getDataForProductListByCategoryAndSex(sex,categoryId, new MyCallBackToRepo<Item>() {
             @Override
             public void onOk(List<Item> nameImagesData) {
                 gridViewAdaptor.setGridViewData((ArrayList<Item>) nameImagesData);
@@ -123,6 +135,7 @@ public class PrductListByCategoryFragment extends Fragment {
         gridViewStyleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                gridViewStyleBtn.animate().rotation(gridViewStyleBtn.getRotation()-180).start();
                 gridView.setNumColumns(styleModeID);
                 if (styleModeID < 2) {
                     styleModeID = styleModeID + 1;
@@ -133,7 +146,7 @@ public class PrductListByCategoryFragment extends Fragment {
         });
 
 
-        filterByPopularityBtn.setOnClickListener(new View.OnClickListener() {
+        filterByBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
@@ -153,6 +166,7 @@ public class PrductListByCategoryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getActivity(), "Нажал на " + position, Toast.LENGTH_LONG).show();
+                filterByBtn.setText(filters.get(position));
             }
         });
         alert.setView(customLayout);
@@ -160,6 +174,8 @@ public class PrductListByCategoryFragment extends Fragment {
         dialog.show();
     }
 
+
+    //для поиска по имени в строке поиска )
     private void updateGridViewData(String name) {
         viewModelForProductListByCategory.getDataForProductListByName(name, new MyCallBackToRepo<Item>() {
             @Override

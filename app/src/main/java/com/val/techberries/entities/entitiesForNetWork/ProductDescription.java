@@ -21,7 +21,19 @@ public class ProductDescription {
     @Expose
     private String season;
 
+    @SerializedName("cost")
+    @Expose
+    private int cost;
+
     public ProductDescription() {
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     public int getId() {
@@ -62,5 +74,18 @@ public class ProductDescription {
 
     public void setSeason(String season) {
         this.season = season;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ProductDescription{" +
+                "id=" + id +
+                ", soleMaterial='" + soleMaterial + '\'' +
+                ", soleHeight=" + soleHeight +
+                ", sex='" + sex + '\'' +
+                ", season='" + season + '\'' +
+                ", cost=" + cost +
+                '}';
     }
 }

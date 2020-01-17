@@ -63,11 +63,16 @@ public class CartRecyclerViewAdaptor extends ListAdapter<ItemToUserCart, CartRec
         int cost=getItem(position).getCost();
         String description=getItem(position).getDescription();
         String name=getItem(position).getItemName();
-
+        if(description!=null){
+            holder.description.append(description);
+        }
+        if(name!=null){
+            holder.name.append(name);
+        }
         holder.image.setImageBitmap(imageId);
         holder.cost.append(String.valueOf(cost));
-        holder.description.append(description);
-        holder.name.append(name);
+
+
     }
 
         public  ItemToUserCart getItemInCartAt(int position){

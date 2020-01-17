@@ -41,18 +41,10 @@
                 app:layout_scrollFlags="scroll|enterAlways">
 
                 <Button
-                    android:id="@+id/filterListBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="10dp"
-                    android:text="Фильтр"
-                    android:textSize="10dp" />
-
-                <Button
-                    android:id="@+id/filterByPopularity"
+                    android:id="@+id/filterBy"
                     android:layout_width="120dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginLeft="180dp"
                     android:text="по популярности"
                     android:textSize="9dp" />
 
@@ -60,7 +52,8 @@
                     android:id="@+id/styleModeBtn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="52dp" />
+                    android:layout_marginLeft="52dp"
+                    android:background="@drawable/ic_transform_24dp"/>
             </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>

@@ -55,7 +55,7 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/sad"
             android:layout_width="match_parent"
-            android:layout_height="408dp"
+            android:layout_height="wrap_content"
             app:layout_anchor="@+id/sad"
             app:layout_anchorGravity="center"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">

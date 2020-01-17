@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -28,6 +29,7 @@ import com.val.techberries.entities.ItemToUserCart;
 import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
 import com.val.techberries.interfacies.MyCallBackToRepo;
 import com.val.techberries.interfacies.MyCallMackForProdDescription;
+import com.val.techberries.interfacies.OnRecyclerViewItemClick;
 import com.val.techberries.modelViews.ViewModelForHomePage;
 import com.val.techberries.modelViews.ViewModelForProductFragment;
 import com.val.techberries.modelViews.viewModelsForDB.UserCartViewModel;
@@ -43,7 +45,7 @@ import me.relex.circleindicator.CircleIndicator;
 public class ProductFragment extends Fragment {
     private ViewPagerForProductActivity adaptor;
 
-    private  Item itemToCart;
+    private Item itemToCart;
 
     private Button addToCart;
 
@@ -76,11 +78,11 @@ public class ProductFragment extends Fragment {
         productCost = view.findViewById(R.id.ProductCost);
         productName = view.findViewById(R.id.ProductName);
         productSeason = view.findViewById(R.id.ProductSeason);
-        productMaterialDescription=view.findViewById(R.id.ProductMaterialDescription);
-        productSex=view.findViewById(R.id.ProductSex);
+        productMaterialDescription = view.findViewById(R.id.ProductMaterialDescription);
+        productSex = view.findViewById(R.id.ProductSex);
 
-        buyWithThisProduct =view.findViewById(R.id.buyWithThisRecyclerView);
-        similarProducts=view.findViewById(R.id.similarItemsRecyclerView);
+        buyWithThisProduct = view.findViewById(R.id.buyWithThisRecyclerView);
+        similarProducts = view.findViewById(R.id.similarItemsRecyclerView);
 
         return view;
     }
@@ -95,7 +97,7 @@ public class ProductFragment extends Fragment {
         viewModelForHomePage = ViewModelProviders.of(this).get(ViewModelForHomePage.class);
         viewModelForPridctFragment = ViewModelProviders.of(this).get(ViewModelForProductFragment.class);
 
-        itemToCart=new Item();
+        itemToCart = new Item();
 
         Collections.addAll(dataForViewPager_def,
                 BitmapFactory.decodeResource(getResources(), R.drawable.placeholder),
@@ -103,18 +105,17 @@ public class ProductFragment extends Fragment {
                 BitmapFactory.decodeResource(getResources(), R.drawable.placeholder));
 
 
-         // в зависимости от имени товара отображаеться нужная колекция. Позже это будут запросы в базу данных
+        // в зависимости от имени товара отображаеться нужная колекция. Позже это будут запросы в базу данных
         String name = getArguments().getString("ProductName");
         String cost = getArguments().getString("ProductCost");
-        Integer productCategory=getArguments().getInt("ProductCategory");
-        String description = getArguments().getString("ProductDescription");
+        Integer productCategory = getArguments().getInt("ProductCategory");
         Log.e("MyTag", "Name from extras " + name);
         Log.e("MyTag", "productCategory from extras " + productCategory);
 
 
-        adaptor=new ViewPagerForProductActivity(getActivity(),dataForViewPager_def);
+        adaptor = new ViewPagerForProductActivity(getActivity(), dataForViewPager_def);
 
-         viewModelForPridctFragment.getBigImagesFromData(name, new MyCallBackToRepo<Bitmap>() {
+        viewModelForPridctFragment.getBigImagesFromData(name, new MyCallBackToRepo<Bitmap>() {
             @Override
             public void onOk(List<Bitmap> nameImagesData) {
                 adaptor.setImagesForViewPager((ArrayList<Bitmap>) nameImagesData);
@@ -129,32 +130,34 @@ public class ProductFragment extends Fragment {
             }
         });
 
-         viewModelForPridctFragment.getProductDescriptionByName(name, new MyCallMackForProdDescription() {
-             @Override
-             public void onSuccess(ProductDescription description) {
-                 productName.append(name);
-                 productCost.append(cost);
-                 productSeason.append(description.getSeason());
-                 productSex.append(description.getSex());
-                 productMaterialDescription.append(description.getSoleMaterial());
+        viewModelForPridctFragment.getProductDescriptionByName(name, new MyCallMackForProdDescription() {
+            @Override
+            public void onSuccess(ProductDescription description) {
+                productName.append(name);
+                productCost.append(String.valueOf(description.getCost()));
+                productSeason.append(description.getSeason());
+                productSex.append(description.getSex());
+                if (description.getSoleMaterial() != null) {
+                    productMaterialDescription.append(description.getSoleMaterial());
+                }
 
-                 itemToCart.setId(description.getId()); //дабавил id
-                 itemToCart.setItemName(name);
-                 itemToCart.setCost(Integer.valueOf(cost ) );
-                 itemToCart.setDescription("\n Сезон: "+description.getSeason() +"\n "
-                         +"Пол: "+description.getSex()+"\n "
-                         +"Состав матиреала: "+description.getSoleMaterial());
-                 Log.e("MyTag","Current item "+ itemToCart.toString());
-             }
+                itemToCart.setId(description.getId()); //дабавил id
+                itemToCart.setItemName(name);
+                itemToCart.setCost(description.getCost());
+                itemToCart.setDescription("\n Сезон: " + description.getSeason() + "\n "
+                        + "Пол: " + description.getSex() + "\n "
+                        + "Состав матиреала: " + description.getSoleMaterial());
+                Log.e("MyTag", "Current item " + itemToCart.toString());
+            }
 
-             @Override
-             public void onError(Throwable throwable) {
+            @Override
+            public void onError(Throwable throwable) {
 
-             }
-         });
+            }
+        });
 
 
-        recyclerViewAdaptor=new RecyclerViewAdaptor(R.layout.third_recycler_view_item,getContext());
+        recyclerViewAdaptor = new RecyclerViewAdaptor(R.layout.third_recycler_view_item, getContext());
         similarProducts.setAdapter(recyclerViewAdaptor);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         similarProducts.setLayoutManager(linearLayoutManager);
@@ -166,7 +169,7 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        recyclerViewAdaptor1=new RecyclerViewAdaptor(R.layout.third_recycler_view_item,getContext());
+        recyclerViewAdaptor1 = new RecyclerViewAdaptor(R.layout.third_recycler_view_item, getContext());
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         buyWithThisProduct.setAdapter(recyclerViewAdaptor1);
         buyWithThisProduct.setLayoutManager(linearLayoutManager1);
@@ -193,18 +196,36 @@ public class ProductFragment extends Fragment {
                 Item tmpObj = itemToCart;
 
                 if (tmpObj != null) {
-                    Log.e("MyTag","Item to cart: "+tmpObj.toString());
+                    Log.e("MyTag", "Item to cart: " + tmpObj.toString());
 
                     DbBitmapUtility dbBitmapUtility = new DbBitmapUtility();
                     byte[] image = dbBitmapUtility.getBytes(tmpObj.getItemImage());
-                    userCartViewModel.insert(new ItemToUserCart(tmpObj.getCost(), tmpObj.getItemName(), image, tmpObj.getDescription(),tmpObj.getId()));
+                    userCartViewModel.insert(new ItemToUserCart(tmpObj.getCost(), tmpObj.getItemName(), image, tmpObj.getDescription(), tmpObj.getId()));
 
                 }
 
             }
         });
 
-    }
+        recyclerViewAdaptor.setItemClickListener((OnRecyclerViewItemClick<Item>) item -> {
+            Toast.makeText(getActivity(), "Нажал на " + item.getItemName(), Toast.LENGTH_LONG).show();
+            Bundle data= dataThatSendToOtherFragment(item);
+            Navigation.findNavController(view).navigate(R.id.productFragment, data);
+        });
+        recyclerViewAdaptor1.setItemClickListener((OnRecyclerViewItemClick<Item>) item -> {
+            Toast.makeText(getActivity(), "Нажал на " + item.getItemName(), Toast.LENGTH_LONG).show();
+            Bundle data= dataThatSendToOtherFragment(item);
+            Navigation.findNavController(view).navigate(R.id.productFragment, data);
+        });
 
+    }
+    private Bundle dataThatSendToOtherFragment(Item item){
+        Bundle data = new Bundle();
+        data.putString("ProductName", item.getItemName());
+        data.putString("ProductCost",String.valueOf(item.getCost()));
+        data.putString("ProductDescription",item.getDescription());
+        data.putInt("ProductCategory",item.getCategory());
+        return data;
+    }
 
 }

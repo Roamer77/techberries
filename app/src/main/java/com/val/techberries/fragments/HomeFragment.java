@@ -27,10 +27,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.val.techberries.adaptors.AdvertisingRecyclerViewAdaptor;
+import com.val.techberries.entities.Advertising;
 import com.val.techberries.entities.Item;
 import com.val.techberries.R;
 import com.val.techberries.adaptors.RecyclerViewAdaptor;
 import com.val.techberries.interfacies.MyCallBackToRepo;
+import com.val.techberries.interfacies.OnRecyclerViewItemClick;
 import com.val.techberries.modelViews.ViewModelForHomePage;
 
 import java.util.ArrayList;
@@ -101,17 +104,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        RecyclerViewAdaptor recyclerViewAdaptor2 = new RecyclerViewAdaptor(R.layout.advertising_layout_for_second_rv,getActivity());
+        AdvertisingRecyclerViewAdaptor recyclerViewAdaptor2 = new AdvertisingRecyclerViewAdaptor(R.layout.advertising_layout_for_second_rv,getActivity());
         secondRecyclerView.setAdapter(recyclerViewAdaptor2);
         secondRecyclerView.setHasFixedSize(true);
 
-        viewModelForHomePage.getDataFroHomePageAdvertisementRecyclerView().observe(this, new Observer<List<Item>>() {
+        viewModelForHomePage.getDataFroHomePageAdvertisementRecyclerView().observe(this, new Observer<List<Advertising>>() {
             @Override
-            public void onChanged(List<Item> items) {
-                recyclerViewAdaptor2.submitList(items);
+            public void onChanged(List<Advertising> advertisings) {
+                recyclerViewAdaptor2.submitList(advertisings);
                 pagerSnapHelper2.attachToRecyclerView(secondRecyclerView);
                 circleIndicator2.attachToRecyclerView(secondRecyclerView, pagerSnapHelper);
-
             }
         });
 
@@ -140,12 +142,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        recyclerViewAdaptor.setItemClickListener(item -> {
+        recyclerViewAdaptor2.setItemClickListener((OnRecyclerViewItemClick<Advertising>) item -> {
+            Log.d("MyTag", "Нажал на РЕКЛАМУ ");
+            Toast.makeText(getActivity(), "Нажал на РЕКЛАМУ", Toast.LENGTH_LONG).show();
+        });
+        recyclerViewAdaptor.setItemClickListener((OnRecyclerViewItemClick<Item>)item -> {
             Toast.makeText(getActivity(), "Нажал на " + item.getItemName(), Toast.LENGTH_LONG).show();
             Bundle data= dataThatSendToOtherFragment(item);
             Navigation.findNavController(view).navigate(R.id.productFragment, data);
         });
-        recyclerViewAdaptor3.setItemClickListener(item -> {
+        recyclerViewAdaptor3.setItemClickListener((OnRecyclerViewItemClick<Item>)item -> {
             Toast.makeText(getActivity(), "Нажал на " + item.getItemName(), Toast.LENGTH_LONG).show();
             Bundle data= dataThatSendToOtherFragment(item);
             Navigation.findNavController(view).navigate(R.id.productFragment, data);

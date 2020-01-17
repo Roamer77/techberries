@@ -46,10 +46,10 @@ public class CatalogFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         List<String> childList=new ArrayList<>();
-        Collections.addAll(childList,"1","2","3");
+        Collections.addAll(childList,"Куртки","Кеды","3");
 
         List<String> childList2=new ArrayList<>();
-        Collections.addAll(childList2,"a","b","c");
+        Collections.addAll(childList2,"Куртки","Кеды","c");
 
         List<String> childList3=new ArrayList<>();
         Collections.addAll(childList3,"a1","b2","c3");
@@ -88,7 +88,12 @@ public class CatalogFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Bundle data = new Bundle();
-                data.putInt("categoryID", childPosition+1);
+                data.putLong("categoryID", childPosition+1);
+                if(groupTitles.get(groupPosition).equals("Мужчинам")){
+                    data.putString("sex","m");
+                }if(groupTitles.get(groupPosition).equals("Женщинам")){
+                    data.putString("sex","fm");
+                }
 
                 Toast.makeText(getActivity(),"Нажал на "+childPosition,Toast.LENGTH_LONG).show();
                 Navigation.findNavController(view).navigate(R.id.prductListByCategoryFragment,data);

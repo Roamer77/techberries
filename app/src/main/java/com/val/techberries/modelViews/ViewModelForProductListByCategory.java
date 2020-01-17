@@ -21,4 +21,8 @@ public class ViewModelForProductListByCategory extends ViewModel {
     public  void getDataForProductListByName(String name,MyCallBackToRepo<Item> repoCallBack){
         mainRepository.getSmallImagesByName(name,repoCallBack);
     }
+
+    public  void getDataForProductListByCategoryAndSex(String sex,long categoryId,MyCallBackToRepo<Item> repoCallBack){
+        mainRepository.getProductByCategoryAndSex(categoryId,sex,repoCallBack);
+    }
 }

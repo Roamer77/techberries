@@ -6,8 +6,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.val.techberries.entities.entitiesForNetWork.AdvertisingFromServer;
 import com.val.techberries.entities.entitiesForNetWork.BigImageFromServer;
 import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
+import com.val.techberries.interfacies.AdvertisingCallBack;
 import com.val.techberries.interfacies.MyCallBack;
 import com.val.techberries.interfacies.MyCallMackForProdDescription;
 import com.val.techberries.utils.ImageConvertar.ConvertImageFromBase64;
@@ -15,6 +17,7 @@ import com.val.techberries.utils.netWork.netInterfaces.RequestApiInterface;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -29,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RequestAPI {
     final String baseURL = "http://192.168.176.17:8080/productInfo/";
     final String imageBaseUrl = "http://192.168.176.17:8080/image/";
+    final String advertisingBaseUrl="http://192.168.176.17:8080/advertising/";
 
     private HttpLoggingInterceptor interceptor;
     private OkHttpClient.Builder client;
@@ -75,7 +79,7 @@ public class RequestAPI {
                         myCallBack.onSuccess(tmpData);
                     }
                 } catch (NullPointerException e) {
-                    Log.e("MyTag", "Ошибка в разборе объекта " + e.getMessage());
+                    Log.e("MyTag", "Ошибка в разборе объекта big Images " + e.getMessage());
                 }
             }
 
@@ -104,18 +108,12 @@ public class RequestAPI {
                     Log.e("MyTag", "Ошибка " + response.code());
                 }
 
-                ProductDescription productDescription = response.body();
-                String res = "";
-                try {
-                    //сетаем в обект инфу о продукте
-
+                    ProductDescription productDescription = response.body();
+                    Log.e("MyTag","productDescription = "+ productDescription.toString());
                     if (myCallBack != null) {
                         myCallBack.onSuccess(productDescription);
                     }
-                    //
-                } catch (NullPointerException e) {
-                    Log.e("MyTag", "Ошибка при разборе объекта " + e.getMessage());
-                }
+
 
             }
 
@@ -153,9 +151,9 @@ public class RequestAPI {
                     Log.e("MyTag", "Small images key set" + images.keySet());
 
                 } catch (IOException e) {
-                    Log.e("MyTag", "Ошибка при разборе объекта " + e.getMessage());
+                    Log.e("MyTag", "Ошибка при разборе объекта small images by categ " + e.getMessage());
                 } catch (NullPointerException e) {
-                    Log.e("MyTag", "Ошибка при разборе объекта " + e.getMessage());
+                    Log.e("MyTag", "Ошибка при разборе объекта small images by categ  " + e.getMessage());
                 }
             }
 
@@ -169,6 +167,50 @@ public class RequestAPI {
 
         getSmallImages.enqueue(callback);
 
+    }
+
+    public  void doPostRequestForListOfSmallImagesBuCategoryAndSex(String sex,long categoryId,MyCallBack myCallBack){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(imageBaseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build()).build();
+        RequestApiInterface requestApiInterface = retrofit.create(RequestApiInterface.class);
+
+        Call<ResponseBody> getSmallImages = requestApiInterface.getSmallImagesByCategoryAndSex(sex,categoryId);
+
+        Callback<ResponseBody> callback = new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("MyTag", "Ошибка " + response.code());
+                }
+                Gson gson = new Gson();
+                String resData = "";
+                try {
+                    ResponseBody responseBody = response.body();
+                    resData = responseBody.string();
+                    Map images = gson.fromJson(resData, Map.class);
+                    if (myCallBack != null) {
+                        myCallBack.onSuccess(images);
+                    }
+                    Log.e("MyTag", "Small images key set" + images.keySet());
+
+                } catch (IOException e) {
+                    Log.e("MyTag", "Ошибка при разборе объекта SmallImages By CategoryAndSex " + e.getMessage());
+                } catch (NullPointerException e) {
+                    Log.e("MyTag", "Ошибка при разборе объекта SmallImages By CategoryAndSex" + e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (myCallBack != null) {
+                    myCallBack.onError(t);
+                }
+            }
+        };
+
+        getSmallImages.enqueue(callback);
     }
 
     public void doGetRequestForListOfSmallImagesByName(String name, MyCallBack myCallBack) {
@@ -209,5 +251,32 @@ public class RequestAPI {
         });
     }
 
+    public void getSimpleAdvertising(AdvertisingCallBack callBack){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(advertisingBaseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build()).build();
+        RequestApiInterface requestApiInterface = retrofit.create(RequestApiInterface.class);
+        Call<List<AdvertisingFromServer>> advertising=requestApiInterface.getSimpleAdvertising();
+            advertising.enqueue(new Callback<List<AdvertisingFromServer>>() {
+                @Override
+                public void onResponse(Call<List<AdvertisingFromServer>> call, Response<List<AdvertisingFromServer>> response) {
+                    if (!response.isSuccessful()) {
+                        Log.e("MyTag", "Ошибка " + response.code());
+                    }
+                    List<AdvertisingFromServer> advertising=response.body();
+                    if(callBack!=null){
+                        callBack.onSuccess(advertising);
+                        Log.e("MyTag","Advertising from Sever "+advertising.toString());
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<AdvertisingFromServer>> call, Throwable t) {
+                        callBack.onError(t);
+                }
+            });
+    }
 
 }

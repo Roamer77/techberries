@@ -6,12 +6,12 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-
 import com.val.techberries.R;
-import com.val.techberries.entities.DTO.ProductEntityFromServer;
+import com.val.techberries.entities.Advertising;
 import com.val.techberries.entities.Item;
+import com.val.techberries.entities.entitiesForNetWork.AdvertisingFromServer;
 import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
+import com.val.techberries.interfacies.AdvertisingCallBack;
 import com.val.techberries.interfacies.MyCallBack;
 import com.val.techberries.interfacies.MyCallBackToRepo;
 import com.val.techberries.interfacies.MyCallMackForProdDescription;
@@ -21,7 +21,6 @@ import com.val.techberries.utils.netWork.RequestAPI;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +29,10 @@ public class MainRepository {
 
     public void getProductsByVategory(int categoryId,MyCallBackToRepo<Item> repoCallBack){
         new GetImagesAndNames(categoryId).execute(repoCallBack);
+    }
+
+    public  void getProductByCategoryAndSex(long categoryId,String sex,MyCallBackToRepo<Item> repoCallBack){
+        new GetProductByCategoryAndSex(categoryId,sex).execute(repoCallBack);
     }
 
     public  void getDataForHomePageFirstRecyclerView(MyCallBackToRepo<Item> repoCallBack){
@@ -71,6 +74,10 @@ public class MainRepository {
 
     public  void getSmallImagesByName(String name,MyCallBackToRepo<Item> repoCallBack){
         new GetSmallImagesByName(name).execute(repoCallBack);
+    }
+
+    public  void getSimpleAdvertising(MyCallBackToRepo<Advertising> repoCallBack){
+        new GetSimpleAdvertising().execute(repoCallBack);
     }
 
     private class GetImagesAndNames extends AsyncTask<MyCallBackToRepo<Item>,Void,List<Item>>{
@@ -116,7 +123,49 @@ public class MainRepository {
 
     }
 
+    private class GetProductByCategoryAndSex extends AsyncTask<MyCallBackToRepo<Item>,Void,List<Item>>{
+        RequestAPI requestAPI=new RequestAPI();
+        List<Item> productEntities=new ArrayList<>();
+        private long  categoryId;
+        private String sex;
 
+        public GetProductByCategoryAndSex(long categoryId,String sex) {
+            this.categoryId = categoryId;
+            this.sex=sex;
+        }
+
+        @Override
+        protected List<Item> doInBackground(MyCallBackToRepo... args) {
+
+
+            requestAPI.doPostRequestForListOfSmallImagesBuCategoryAndSex(sex,categoryId, new MyCallBack() {
+                @Override
+                public void onSuccess(Map nameImagesData) {
+
+                    ConvertImageFromBase64 convertImageFromBase64=new ConvertImageFromBase64();
+
+
+
+                    Object[] names=nameImagesData.keySet().toArray();
+                    Object[] images=nameImagesData.values().toArray();
+
+                    for (int i=0;i<nameImagesData.size();i++){
+                        Item tmpItem=new Item((String) names[i],convertImageFromBase64.convertFromBase64toImage((String) images[i]),124,"myDiscription");
+                        productEntities.add(tmpItem);
+                    }
+
+                    args[0].onOk(productEntities);
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+
+                }
+            });
+
+            return productEntities;
+        }
+    }
     private class GetBigImagesFromServer extends  AsyncTask<MyCallBackToRepo<Bitmap>,Void,Void>{
         RequestAPI requestAPI=new RequestAPI();
         List<Bitmap> bigImages=new ArrayList<>();
@@ -222,4 +271,32 @@ public class MainRepository {
         }
     }
 
+    private  class GetSimpleAdvertising extends AsyncTask<MyCallBackToRepo<Advertising>,Void,List<Advertising>>{
+        RequestAPI requestAPI=new RequestAPI();
+        List<Advertising> advertising=new ArrayList<>();
+        Advertising tmpAdv;
+        @Override
+        protected List<Advertising> doInBackground(MyCallBackToRepo<Advertising>... args) {
+            requestAPI.getSimpleAdvertising(new AdvertisingCallBack() {
+                @Override
+                public void onSuccess(List<AdvertisingFromServer> advertisingFromServers) {
+                    ConvertImageFromBase64 convertImageFromBase64=new ConvertImageFromBase64();
+                    for (int i=0;i<advertisingFromServers.size();i++){
+                        tmpAdv=new Advertising();
+                        Bitmap bitmap= convertImageFromBase64.convertFromBase64toImage(advertisingFromServers.get(i).getAdvImage());
+                        tmpAdv.setImage(bitmap);
+                        tmpAdv.setId(advertisingFromServers.get(i).getId());
+                        advertising.add(tmpAdv);
+                    }
+                    args[0].onOk(advertising);
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    Log.e("MyTag","Что то не так в ходе конвертации в классе "+this.getClass().getName());
+                }
+            });
+            return null;
+        }
+    }
 }
