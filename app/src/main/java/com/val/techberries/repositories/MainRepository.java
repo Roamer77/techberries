@@ -11,6 +11,7 @@ import com.val.techberries.entities.Advertising;
 import com.val.techberries.entities.Item;
 import com.val.techberries.entities.entitiesForNetWork.AdvertisingFromServer;
 import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
+import com.val.techberries.entities.entitiesForNetWork.ProductFroGridView;
 import com.val.techberries.interfacies.AdvertisingCallBack;
 import com.val.techberries.interfacies.MyCallBack;
 import com.val.techberries.interfacies.MyCallBackToRepo;
@@ -138,19 +139,19 @@ public class MainRepository {
         protected List<Item> doInBackground(MyCallBackToRepo... args) {
 
 
-            requestAPI.doPostRequestForListOfSmallImagesBuCategoryAndSex(sex,categoryId, new MyCallBack() {
+            requestAPI.doPostRequestForListOfSmallImagesBuCategoryAndSex(sex,categoryId, new MyCallBackToRepo<ProductFroGridView>() {
                 @Override
-                public void onSuccess(Map nameImagesData) {
+                public void onOk(List<ProductFroGridView> nameImagesData) {
 
                     ConvertImageFromBase64 convertImageFromBase64=new ConvertImageFromBase64();
 
-
-
-                    Object[] names=nameImagesData.keySet().toArray();
-                    Object[] images=nameImagesData.values().toArray();
-
                     for (int i=0;i<nameImagesData.size();i++){
-                        Item tmpItem=new Item((String) names[i],convertImageFromBase64.convertFromBase64toImage((String) images[i]),124,"myDiscription");
+                        int cost=Integer.valueOf(nameImagesData.get(i).getCost());
+                        String name=nameImagesData.get(i).getName();
+                        Bitmap img=convertImageFromBase64.convertFromBase64toImage(nameImagesData.get(i).getImage());
+
+                        Item tmpItem=new Item(name,img,cost ,"myDiscription");
+
                         productEntities.add(tmpItem);
                     }
 

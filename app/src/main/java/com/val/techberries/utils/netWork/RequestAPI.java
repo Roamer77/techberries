@@ -9,8 +9,10 @@ import com.google.gson.Gson;
 import com.val.techberries.entities.entitiesForNetWork.AdvertisingFromServer;
 import com.val.techberries.entities.entitiesForNetWork.BigImageFromServer;
 import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
+import com.val.techberries.entities.entitiesForNetWork.ProductFroGridView;
 import com.val.techberries.interfacies.AdvertisingCallBack;
 import com.val.techberries.interfacies.MyCallBack;
+import com.val.techberries.interfacies.MyCallBackToRepo;
 import com.val.techberries.interfacies.MyCallMackForProdDescription;
 import com.val.techberries.utils.ImageConvertar.ConvertImageFromBase64;
 import com.val.techberries.utils.netWork.netInterfaces.RequestApiInterface;
@@ -169,41 +171,36 @@ public class RequestAPI {
 
     }
 
-    public  void doPostRequestForListOfSmallImagesBuCategoryAndSex(String sex,long categoryId,MyCallBack myCallBack){
+    public  void doPostRequestForListOfSmallImagesBuCategoryAndSex(String sex, long categoryId, MyCallBackToRepo myCallBack){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(imageBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client.build()).build();
         RequestApiInterface requestApiInterface = retrofit.create(RequestApiInterface.class);
 
-        Call<ResponseBody> getSmallImages = requestApiInterface.getSmallImagesByCategoryAndSex(sex,categoryId);
+        Call<List<ProductFroGridView>> getSmallImages = requestApiInterface.getSmallImagesByCategoryAndSex(sex,categoryId);
 
-        Callback<ResponseBody> callback = new Callback<ResponseBody>() {
+        Callback<List<ProductFroGridView>> callback = new Callback<List<ProductFroGridView>>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<List<ProductFroGridView>> call, Response<List<ProductFroGridView>> response) {
                 if (!response.isSuccessful()) {
                     Log.e("MyTag", "Ошибка " + response.code());
                 }
-                Gson gson = new Gson();
-                String resData = "";
                 try {
-                    ResponseBody responseBody = response.body();
-                    resData = responseBody.string();
-                    Map images = gson.fromJson(resData, Map.class);
-                    if (myCallBack != null) {
-                        myCallBack.onSuccess(images);
-                    }
-                    Log.e("MyTag", "Small images key set" + images.keySet());
+                    List<ProductFroGridView> responseBody = response.body();
 
-                } catch (IOException e) {
+                    if (myCallBack != null) {
+                        myCallBack.onOk(responseBody);
+                    }
+                  //  Log.e("MyTag", "Small images key set" + images.keySet());
+
+                } catch (Exception e) {
                     Log.e("MyTag", "Ошибка при разборе объекта SmallImages By CategoryAndSex " + e.getMessage());
-                } catch (NullPointerException e) {
-                    Log.e("MyTag", "Ошибка при разборе объекта SmallImages By CategoryAndSex" + e.getMessage());
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<List<ProductFroGridView>> call, Throwable t) {
                 if (myCallBack != null) {
                     myCallBack.onError(t);
                 }

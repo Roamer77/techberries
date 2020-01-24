@@ -49,5 +49,10 @@
         android:name="com.val.techberries.fragments.Tabs.SelectPaymentTypeFragment"
         android:label="courier_tab_layout"
         tools:layout="@layout/courier_tab_layout" />
+    <fragment
+        android:id="@+id/testPayPalPayment"
+        android:name="com.val.techberries.fragments.TestPayPalPayment"
+        android:label="paypal_payment_layout"
+        tools:layout="@layout/paypal_payment_layout" />
 
 </navigation>

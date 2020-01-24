@@ -62,7 +62,7 @@ public class CourierTab extends Fragment implements FragmentListViewUpdated {
 
     @Override
     public void update(int i) {
-        Log.e("MyTag","c "+" "+i+ " List "+listView+ " "+this.hashCode());
+      //  Log.e("MyTag","c "+" "+i+ " List "+listView+ " "+this.hashCode());
         if(i!=0 &&listView!=null){
             listView.clearChoices();
             listView.invalidateViews();

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.val.techberries.R;
 import com.val.techberries.adaptors.SelectAddressListAdaptor;
@@ -104,10 +105,24 @@ public class SelectPaymentTypeFragment extends Fragment {
                 order.setPaymentType(paymetType);
                 order.setDeliveryType(deliveryType);
                 order.setProductsID(productIDs);
-                new SendData().execute(order);
 
+                if(Integer.valueOf(paymetType)==0){
+                    Navigation.findNavController(view).navigate(R.id.testPayPalPayment);
+                    Log.e("MyTag","Переходим к оплате через paypal");
+                        if(sharedPreferences.getInt("PaymentSuccess",99)==1){
+                            Log.e("MyTag","Отправляю заказ после оплаты ");
+                           // new SendData().execute(order);
+                            editor.putInt("PaymentSuccess",0);
+                            editor.commit();
+                        }
+                }else {
+                    Log.e("MyTag","Просто отправляю заказ");
+                    new SendData().execute(order);
+                }
             }
         });
+
+
     }
 
     private class SendData extends AsyncTask<Order, Void, Void> {
@@ -135,6 +150,12 @@ public class SelectPaymentTypeFragment extends Fragment {
         protected Void doInBackground(Order... args) {
             dataToServerSender.makeOrderRequest(auth, args[0]);
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            editor.putInt("PaymentSuccess",0);
+            editor.commit();
         }
     }
 

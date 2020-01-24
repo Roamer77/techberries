@@ -84,7 +84,7 @@ public class CartFragment extends Fragment {
             public void onChanged(List<ItemToUserCart> itemToUserCarts) {
                 Log.e("MyTag","size= "+itemToUserCarts.size());
 
-                itemToUserCarts.forEach(s->totalPriceForProducts+=s.getCost());
+                //itemToUserCarts.forEach(s->totalPriceForProducts+=s.getCost());
                 for(int i=0;i<itemToUserCarts.size();i++){
                     ItemToUserCart item=itemToUserCarts.get(i);
                     totalPriceForProducts+=item.getCost();

@@ -62,5 +62,6 @@
             android:layout_marginRight="-164dp"
             android:background="@drawable/clicable_efect"
             android:text="Оформить" />
+
     </RelativeLayout>
 </RelativeLayout>

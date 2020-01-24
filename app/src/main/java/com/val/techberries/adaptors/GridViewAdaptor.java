@@ -69,7 +69,7 @@ public class GridViewAdaptor extends BaseAdapter {
 
         productImage.setImageBitmap(data.get(position).getItemImage());
         description.setText(data.get(position).getItemName());
-         cost.append( String.valueOf( data.get(position).getCost()) );
+        cost.setText( String.valueOf( data.get(position).getCost()) );
 
         likeBtn.setOnClickListener(v -> doLike(position));
         addToCartBtn.setOnClickListener(v -> addToCart(position));

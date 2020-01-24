@@ -20,20 +20,30 @@
                 android:src="@drawable/ic_flag"/>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="160dp"
+                android:paddingLeft="14dp"
+                android:text="Цена:" />
+
+            <TextView
                 android:id="@+id/GridView_productCost"
                 android:layout_width="103dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/itemImage"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="3dp"
-                android:paddingLeft="14dp"
-                android:text="Цена: " />
+                android:layout_marginStart="57dp"
+                android:layout_marginTop="5dp"
+
+                android:text="..." />
 
             <ImageButton
                 android:id="@+id/prodctListGridView_addToCartBtn"
-                android:layout_width="49dp"
-                android:layout_height="49dp"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
                 android:layout_below="@+id/itemImage"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="3dp"
@@ -45,8 +55,8 @@
 
             <ImageButton
                 android:id="@+id/prodctListGridView_likeBtn"
-                android:layout_width="49dp"
-                android:layout_height="49dp"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
                 android:layout_below="@+id/itemImage"
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd="3dp"
@@ -57,14 +67,23 @@
                 />
 
             <TextView
-                android:id="@+id/prodctListGridView_description"
-                android:layout_width="190dp"
-                android:layout_height="49dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/GridView_productCost"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="7dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="14dp"
                 android:text="Название: " />
+
+            <TextView
+                android:id="@+id/prodctListGridView_description"
+                android:layout_width="188dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/GridView_productCost"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="93dp"
+                android:layout_marginTop="10dp"
+                android:text="... " />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

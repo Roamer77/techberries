@@ -2,6 +2,7 @@ package com.val.techberries.utils.netWork.netInterfaces;
 
 import com.val.techberries.entities.entitiesForNetWork.AdvertisingFromServer;
 import com.val.techberries.entities.entitiesForNetWork.Order;
+import com.val.techberries.entities.entitiesForNetWork.ProductFroGridView;
 import com.val.techberries.entities.entitiesForNetWork.UserInfo;
 import com.val.techberries.entities.entitiesForNetWork.BigImageFromServer;
 import com.val.techberries.entities.entitiesForNetWork.ProductDescription;
@@ -50,5 +51,5 @@ public interface RequestApiInterface {
     Call<List<AdvertisingFromServer>> getSimpleAdvertising();
 
     @POST("/image/getSmallImagesByCategoryAndSex")
-    Call<ResponseBody> getSmallImagesByCategoryAndSex(@Query("sex") String sex,@Query("categotyId") long categotyId );
+    Call<List<ProductFroGridView>> getSmallImagesByCategoryAndSex(@Query("sex") String sex, @Query("categotyId") long categotyId );
 }
