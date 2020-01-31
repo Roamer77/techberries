@@ -83,6 +83,11 @@ public class SelectPaymentTypeFragment extends Fragment {
                 int paymentTypeID = position;
                 editor.putInt("paymetType", paymentTypeID);
                 editor.commit();
+                if(position==0){
+                    makeOrderButton.setText("Оплатить через PayPal");
+                }else {
+                    makeOrderButton.setText("Оформить");
+                }
             }
         });
 

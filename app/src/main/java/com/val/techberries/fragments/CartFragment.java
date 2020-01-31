@@ -26,9 +26,13 @@ import com.val.techberries.adaptors.CartRecyclerViewAdaptor;
 import com.val.techberries.entities.ItemToUserCart;
 import com.val.techberries.modelViews.viewModelsForDB.UserCartViewModel;
 import com.val.techberries.utils.netWork.DataToServerSender;
+import com.val.techberries.utils.netWork.InternetConnectionChecker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
@@ -47,6 +51,8 @@ public class CartFragment extends Fragment {
     private  int totalPriceForProducts;
     private int productCounter;
     private ArrayList<Integer> productsIDs;
+
+    private InternetConnectionChecker internetConnectionChecker;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,12 +62,17 @@ public class CartFragment extends Fragment {
         sharedPreferences=getActivity().getPreferences(Context.MODE_PRIVATE);
 
         makeOrder.setEnabled(false);
+
+        internetConnectionChecker=new InternetConnectionChecker(getActivity().getApplication());
+        internetConnectionChecker.execute();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        doActionsIfNoInternetConnection(view);
 
         cartRecyclerViewAdaptor = new CartRecyclerViewAdaptor(getActivity());
         recyclerView = view.findViewById(R.id.itemsInCart_recyclerView);
@@ -83,8 +94,11 @@ public class CartFragment extends Fragment {
             @Override
             public void onChanged(List<ItemToUserCart> itemToUserCarts) {
                 Log.e("MyTag","size= "+itemToUserCarts.size());
-
-                //itemToUserCarts.forEach(s->totalPriceForProducts+=s.getCost());
+                if(itemToUserCarts.size()==0){
+                    Bundle data=new Bundle();
+                    data.putInt("FragmentForBackStap",R.id.cartFragment);
+                    Navigation.findNavController(view).navigate(R.id.ifCartIsEmpty,data);
+                }
                 for(int i=0;i<itemToUserCarts.size();i++){
                     ItemToUserCart item=itemToUserCarts.get(i);
                     totalPriceForProducts+=item.getCost();
@@ -128,11 +142,27 @@ public class CartFragment extends Fragment {
 
     }
 
-    private void setNewLayout(int id){
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(id, null);
-        ViewGroup rootView = (ViewGroup) getView();
-        //rootView.removeAllViews();
-        rootView.addView(view);
+    private void doActionsIfNoInternetConnection(View view){
+        internetConnectionChecker=new InternetConnectionChecker(getActivity().getApplication());
+        internetConnectionChecker.execute();
+        try {
+            boolean internet= internetConnectionChecker.get(1, TimeUnit.SECONDS);
+            if(internet){
+                Log.e("MyTag","Интернет ЕСТЬ");
+            }else {
+                Log.e("MyTag","Интернет НЕТ");
+
+                Bundle data=new Bundle();
+                data.putInt("FragmentThatIsNotHaveInternet",R.id.cartFragment);
+                Navigation.findNavController(view).navigate(R.id.noInternetConection,data);
+
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
     }
 }

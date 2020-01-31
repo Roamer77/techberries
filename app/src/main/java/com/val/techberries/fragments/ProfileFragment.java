@@ -21,9 +21,13 @@ import com.val.techberries.R;
 import com.val.techberries.interfacies.CallBackToSaveUserInfo;
 import com.val.techberries.utils.NoScrollArrayList;
 import com.val.techberries.utils.netWork.DataToServerSender;
+import com.val.techberries.utils.netWork.InternetConnectionChecker;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class ProfileFragment extends Fragment {
 
@@ -36,6 +40,8 @@ public class ProfileFragment extends Fragment {
 
     private DataToServerSender dataToServerSender;
 
+    private InternetConnectionChecker internetConnectionChecker;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,12 +49,18 @@ public class ProfileFragment extends Fragment {
         logoutBtn=view.findViewById(R.id.logout_from_account);
         dataToServerSender=new DataToServerSender();
         sharedPreferences=getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        internetConnectionChecker=new InternetConnectionChecker(getActivity().getApplication());
+        internetConnectionChecker.execute();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        doActionsIfNoInternetConnection(view);
+
         infoList =view. findViewById(R.id.listOfInformation);
         countryPicker=view. findViewById(R.id.countryPicker);
         openLoginFragment=view.findViewById(R.id.open_login_fragment);
@@ -90,5 +102,29 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+    }
+
+    private void doActionsIfNoInternetConnection(View view){
+        internetConnectionChecker=new InternetConnectionChecker(getActivity().getApplication());
+        internetConnectionChecker.execute();
+        try {
+            boolean internet= internetConnectionChecker.get(1, TimeUnit.SECONDS);
+            if(internet){
+                Log.e("MyTag","Интернет ЕСТЬ");
+            }else {
+                Log.e("MyTag","Интернет НЕТ");
+
+                Bundle data=new Bundle();
+                data.putInt("FragmentThatIsNotHaveInternet",R.id.profileFragment);
+                Navigation.findNavController(view).navigate(R.id.noInternetConection,data);
+
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
     }
 }

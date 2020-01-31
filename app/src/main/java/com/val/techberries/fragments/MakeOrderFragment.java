@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.val.techberries.R;
 import com.val.techberries.adaptors.CustomTabAdaprot;
 import com.val.techberries.fragments.Tabs.FragmentListViewUpdated;
+import com.val.techberries.utils.netWork.InternetConnectionChecker;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ public class MakeOrderFragment extends Fragment {
     private Button nextBtn;
     private TextView productCounter;
     private TextView productFullPrice;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class MakeOrderFragment extends Fragment {
 
         productCounter=view.findViewById(R.id.productCounter);
         productFullPrice=view.findViewById(R.id.fullProductPrice);
+
 
         return view;
     }

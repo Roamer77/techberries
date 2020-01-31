@@ -42,6 +42,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/BlackColorforText"
                 android:drawableLeft="@drawable/ic_search"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:ems="10"
                 android:hint="Поиск"
@@ -183,12 +185,13 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="match_parent"
+                            android:id="@+id/FirstVkBtn"
+                            android:layout_width="46dp"
+                            android:layout_height="73dp"
                             android:layout_marginStart="40dp"
                             android:layout_marginTop="6dp"
                             android:layout_marginEnd="60dp"
-                            android:src="@drawable/ic_vk"
+                            android:src="@drawable/ic_vk2"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView3"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -208,8 +211,8 @@
                             android:layout_width="40dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="36dp"
-                            android:layout_marginTop="16dp"
-                            android:src="@drawable/ic_telegram"
+                            android:layout_marginTop="6dp"
+                            android:src="@drawable/ic_telegram2"
                             app:layout_constraintStart_toEndOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -231,6 +234,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:text="Мы в соцстях"
+                            android:paddingStart="10dp"
                             android:textColor="@color/BlackColorforText"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -239,20 +243,21 @@
                             android:id="@+id/ic_facebook_soсial_network"
                             android:layout_width="40dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="20dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="6dp"
                             android:src="@drawable/ic_facebook"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/SecondVkBtn"
                             android:layout_width="40dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="6dp"
                             android:src="@drawable/ic_vk"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ic_ok_social_network"
+                            app:layout_constraintStart_toEndOf="@+id/ok_social_network_btn"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <de.hdodenhof.circleimageview.CircleImageView
@@ -286,7 +291,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/ic_ok_social_network"
+                            android:id="@+id/ok_social_network_btn"
                             android:layout_width="40dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="24dp"
@@ -328,33 +333,5 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
-
-        <Button
-            android:id="@+id/homeButton_on_BottomTool_bar"
-            android:layout_marginStart="40dp"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/home_button_style"/>
-
-        <Button
-            android:id="@+id/listBtn_mainActivity"
-            android:layout_marginLeft="40dp"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/list_button_style"/>
-
-        <Button
-            android:id="@+id/cartBtn_mainActivity"
-            android:layout_marginLeft="40dp"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/cart_button_style"/>
-
-        <Button
-            android:id="@+id/accountBtn_mainActivity"
-            android:layout_marginLeft="40dp"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/profile_button_style"/>
     </androidx.appcompat.widget.Toolbar>
 </RelativeLayout>

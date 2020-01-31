@@ -21,11 +21,15 @@ import androidx.navigation.Navigation;
 import com.val.techberries.R;
 import com.val.techberries.utils.NoScrollListView;
 import com.val.techberries.adaptors.CustomExpandableListAdaptor;
+import com.val.techberries.utils.netWork.InternetConnectionChecker;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class CatalogFragment extends Fragment {
 
@@ -34,17 +38,25 @@ public class CatalogFragment extends Fragment {
 
     private EditText searchLine;
 
+    private InternetConnectionChecker internetConnectionChecker;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.activity_catalog,null);
         searchLine=view.findViewById(R.id.search_line_et);
+
+
+
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        doActionsIfNoInternetConnection(view);
+
         List<String> childList=new ArrayList<>();
         Collections.addAll(childList,"Куртки","Кеды","3");
 
@@ -102,4 +114,30 @@ public class CatalogFragment extends Fragment {
             }
         });
     }
+
+    private void doActionsIfNoInternetConnection(View view){
+        internetConnectionChecker=new InternetConnectionChecker(getActivity().getApplication());
+        internetConnectionChecker.execute();
+        try {
+            boolean internet= internetConnectionChecker.get(1, TimeUnit.SECONDS);
+            if(internet){
+                Log.e("MyTag","Интернет ЕСТЬ");
+            }else {
+                Log.e("MyTag","ИнтернетНЕТ");
+
+                Bundle data=new Bundle();
+                data.putInt("FragmentThatIsNotHaveInternet",R.id.catalogFragment);
+                Navigation.findNavController(view).navigate(R.id.noInternetConection,data);
+
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

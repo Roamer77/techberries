@@ -54,5 +54,15 @@
         android:name="com.val.techberries.fragments.TestPayPalPayment"
         android:label="paypal_payment_layout"
         tools:layout="@layout/paypal_payment_layout" />
+    <fragment
+        android:id="@+id/noInternetConection"
+        android:name="com.val.techberries.fragments.utileFragments.NoInternetConection"
+        android:label="no_internat_connection_layout"
+        tools:layout="@layout/no_internat_connection_layout" />
+    <fragment
+        android:id="@+id/ifCartIsEmpty"
+        android:name="com.val.techberries.fragments.utileFragments.IfCartIsEmpty"
+        android:label="if_cart_is_emply"
+        tools:layout="@layout/if_cart_is_emply" />
 
 </navigation>
