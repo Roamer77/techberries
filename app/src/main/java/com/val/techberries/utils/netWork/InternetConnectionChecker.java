@@ -25,15 +25,6 @@ public class InternetConnectionChecker extends AsyncTask<Void,Void,Boolean> {
         return checkInternetConnection();
     }
 
-    @Override
-    protected void onPostExecute(Boolean aVoid) {
-        if(aVoid){
-            Toast.makeText(application,"Интернет есть !!",Toast.LENGTH_LONG).show();
-
-        }else {
-            Toast.makeText(application,"Интернет нет !!",Toast.LENGTH_LONG).show();
-        }
-    }
     private boolean checkInternetConnection(){
         try {
             int timeoutMs = 1500;

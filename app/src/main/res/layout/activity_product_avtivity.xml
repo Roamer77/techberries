@@ -45,7 +45,7 @@
                 android:id="@+id/circleIndicator_for_viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                app:ci_drawable="@drawable/circle_indicator_stile"
+                app:ci_drawable="@drawable/circle_indicator_stile2"
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
 
@@ -65,73 +65,89 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:orientation="vertical">
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/ProductName"
+                    android:layout_height="250dp">
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Название: "
-                        android:textSize="20dp" />
+                        android:layout_height="250dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/ProductCost"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Цена: "
-                        android:textSize="20dp" />
+                        <TextView
+                            android:id="@+id/ProductName"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="Название: "
+                            android:textSize="20dp" />
 
-                    <TextView
-                        android:id="@+id/ProductSeason"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Сезон: "
-                        android:textSize="20dp" />
+                        <TextView
+                            android:id="@+id/ProductCost"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="Цена: "
+                            android:textSize="20dp" />
 
-                    <TextView
-                        android:id="@+id/ProductSex"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Пол: "
-                        android:textSize="20dp" />
+                        <TextView
+                            android:id="@+id/ProductSeason"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="Сезон: "
+                            android:textSize="20dp" />
 
-                    <TextView
-                        android:id="@+id/ProductMaterialDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Состав материала: "
-                        android:textSize="20dp" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/ProductSex"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="Пол: "
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/ProductMaterialDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="Состав материала: "
+                            android:textSize="20dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
                 <!-- сюда вставляем любые элементы -->
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <CalendarView
                     android:layout_width="match_parent"
                     android:layout_height="150dp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/similarItemsRecyclerView"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/colorAccent"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="0dp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="150dp"
+                        android:layout_marginTop="10dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/similarItemsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/wigthBackground"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </CalendarView>
+
+                <CalendarView
                     android:layout_width="match_parent"
                     android:layout_height="150dp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/buyWithThisRecyclerView"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/colorPrimary"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="0dp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="150dp"
+                        android:layout_marginTop="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/buyWithThisRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/wigthBackground"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </CalendarView>
+
 
             </LinearLayout>
 
@@ -150,14 +166,19 @@
        <Button
            android:id="@+id/addToCart_Btn"
            android:layout_width="335dp"
-           android:layout_height="match_parent"
+           android:layout_height="40dp"
+           android:layout_marginStart="14dp"
+           android:background="@color/colorPrimary"
            android:text="В корзину">
 
        </Button>
        <ImageButton
-           android:layout_width="50dp"
-           android:layout_height="50dp"
-           android:src="@drawable/ic_add_shopping_cart"/>
+           android:layout_width="40dp"
+           android:layout_height="40dp"
+           android:layout_marginTop="1dp"
+           android:layout_marginLeft="3dp"
+           android:background="@color/colorPrimary"
+           android:src="@drawable/ic_favorite24dp"/>
    </LinearLayout>
 
     <androidx.appcompat.widget.Toolbar

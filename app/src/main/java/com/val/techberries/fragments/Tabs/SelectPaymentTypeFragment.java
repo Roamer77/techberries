@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -112,13 +113,16 @@ public class SelectPaymentTypeFragment extends Fragment {
                 order.setProductsID(productIDs);
 
                 if(Integer.valueOf(paymetType)==0){
-                    Navigation.findNavController(view).navigate(R.id.testPayPalPayment);
+                    Bundle data=new Bundle();
+                    data.putInt("SumFroPayment",price);
+                    Navigation.findNavController(view).navigate(R.id.testPayPalPayment,data);
                     Log.e("MyTag","Переходим к оплате через paypal");
                         if(sharedPreferences.getInt("PaymentSuccess",99)==1){
                             Log.e("MyTag","Отправляю заказ после оплаты ");
                            // new SendData().execute(order);
                             editor.putInt("PaymentSuccess",0);
                             editor.commit();
+
                         }
                 }else {
                     Log.e("MyTag","Просто отправляю заказ");

@@ -13,6 +13,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,7 +50,8 @@ public class TestPayPalPayment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         webView.setWebViewClient(new CustomWebViewClient(view));
-        String sum = "19";
+        int data=getArguments().getInt("SumFroPayment");
+        String sum = String.valueOf(data);
         webView.loadUrl("http://192.168.176.17:8080/payment/make?sum=" + sum);
     }
 
@@ -87,6 +89,7 @@ public class TestPayPalPayment extends Fragment {
                 Log.e("MyTag", "Пытаюсь вернуться из "+successUrl);
                 Navigation.findNavController(this.view).popBackStack(R.id.cartFragment,true);
                 addMarkIfPaymentSuccess(0);
+                Toast.makeText(getContext(),"Заказ успешно оплачен",Toast.LENGTH_SHORT).show();
             }
             return false;
         }

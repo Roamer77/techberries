@@ -137,15 +137,22 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/thirdRecyclerView"
-
+                    <androidx.cardview.widget.CardView
                         android:layout_width="409dp"
                         android:layout_height="131dp"
-
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_for_thirdRecyclerView" />
+                        app:layout_constraintTop_toBottomOf="@+id/title_for_thirdRecyclerView">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/thirdRecyclerView"
+
+                            android:layout_width="409dp"
+                            android:layout_height="131dp"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+                    </androidx.cardview.widget.CardView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

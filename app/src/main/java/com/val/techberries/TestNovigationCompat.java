@@ -85,10 +85,7 @@ public class TestNovigationCompat extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean aVoid) {
-            if(aVoid){
-                Toast.makeText(getApplicationContext(),"Интернет есть !!",Toast.LENGTH_LONG).show();
-            }else {
-
+            if(!aVoid){
                 Bundle data=new Bundle();
                 data.putInt("FragmentThatIsNotHaveInternet",R.id.homeFragment);
                 navController.navigate(R.id.noInternetConection,data);
